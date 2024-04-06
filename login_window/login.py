@@ -2,18 +2,21 @@ import tkinter as tk
 import customtkinter as ctk
 from datetime import datetime
 from login_window.resizeImage import ResizedImage
-from db_connection import *
+from db_connection import database
 
 WIDTH_WINDOW = 1000
 HEIGHT_WINDOW = 600
 FONT_FAMILY = 'Franklin Gothic Heavy'
-
 
 class Login(ctk.CTk):
     def __init__(self):
         super().__init__()
 
         self.isLoginSuccessful = False
+
+        # query usernames and logins
+        query_login = "SELECT * FROM db_findtick.authorization"
+        self.username_passwords = database.execute_query(query_login)
 
         self.set_window_appearance()
         self.center_window()
@@ -83,7 +86,7 @@ class Login(ctk.CTk):
         username = self.username.get()
         password = self.password.get()
 
-        for entry in login_passwords:
+        for entry in self.username_passwords:
             if username in entry:
                 if password == entry[1]:
                     time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -128,4 +131,3 @@ class Login(ctk.CTk):
     def run_login_process(self):
         self.mainloop()
         return self.isLoginSuccessful
-
