@@ -40,6 +40,7 @@ class MainWindow(QMainWindow):
 
         for title, poster in zip(self.movie_titles, self.movie_posters):
             movie_card = MovieCard()
+            movie_card.movieClicked.connect(self.on_movie_clicked)
             movie_card.set_card(title, poster)
             scroll_layout.addWidget(movie_card)
 
@@ -53,6 +54,9 @@ class MainWindow(QMainWindow):
 
     def connect_all_events(self):
         self.search.returnPressed.connect(self.handle_search)
+
+    def on_movie_clicked(self, title):
+        print("Movie clicked:", title)
 
     def wheelEvent(self, event: QWheelEvent):
         if event.modifiers() & Qt.ControlModifier:
