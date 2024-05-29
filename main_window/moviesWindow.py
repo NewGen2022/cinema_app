@@ -1,9 +1,12 @@
+# Assuming this is already implemented as shown earlier
 from PyQt5.QtWidgets import QMainWindow, QScrollArea, QWidget, QHBoxLayout, QApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QWheelEvent
 from PyQt5.uic import loadUi
 from db_connection import database
 from main_window.movieCard import MovieCard
+from functools import partial
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -20,13 +23,16 @@ class MainWindow(QMainWindow):
         self.show()
 
         self.connect_all_events()
-        query_movie_info = "SELECT image_kino, name_kino FROM db_findtick.kino;"
+        query_movie_info = """SELECT DISTINCT Sessions.id_kino,  kino.name_kino, kino.image_kino FROM db_findtick.Sessions
+join db_findtick.kino on Sessions.id_kino = kino.id_kino;"""
         self.movie_info = database.execute_query(query_movie_info)
+        self.movie_ids = []
         self.movie_titles = []
         self.movie_posters = []
         for item in self.movie_info:
+            self.movie_ids.append(item[0])
             self.movie_titles.append(item[1])
-            self.movie_posters.append(item[0])
+            self.movie_posters.append(item[2])
 
         self.display_all_movies()
 
@@ -38,10 +44,12 @@ class MainWindow(QMainWindow):
         scroll_widget = QWidget()
         scroll_layout = QHBoxLayout(scroll_widget)
 
-        for title, poster in zip(self.movie_titles, self.movie_posters):
+        for movie_id, title, poster in zip(
+            self.movie_ids, self.movie_titles, self.movie_posters
+        ):
             movie_card = MovieCard()
-            movie_card.movieClicked.connect(self.on_movie_clicked)
             movie_card.set_card(title, poster)
+            movie_card.movieClicked.connect(partial(self.on_movie_clicked, movie_id))
             scroll_layout.addWidget(movie_card)
 
         scroll_widget.setLayout(scroll_layout)
@@ -55,8 +63,8 @@ class MainWindow(QMainWindow):
     def connect_all_events(self):
         self.search.returnPressed.connect(self.handle_search)
 
-    def on_movie_clicked(self, title):
-        print("Movie clicked:", title)
+    def on_movie_clicked(self, movie_id):
+        print("Movie clicked, ID:", movie_id)
 
     def wheelEvent(self, event: QWheelEvent):
         if event.modifiers() & Qt.ControlModifier:
