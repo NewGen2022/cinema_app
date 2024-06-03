@@ -6,7 +6,7 @@ from PyQt5.uic import loadUi
 from main_window.movieCard import MovieCard
 from functools import partial
 
-from HALL.test import SessionWindow
+from HALL.session import SessionWindow
 
 
 class MainWindow(QMainWindow):
