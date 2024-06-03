@@ -1,15 +1,17 @@
 from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QApplication, QLabel, QGridLayout, QWidget, QSpacerItem, QSizePolicy
+from PyQt5.QtWidgets import QLabel, QGridLayout, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPixmap
-import sys
+
 
 class MovieCard(QWidget):
-    movieClicked = pyqtSignal(str)
+    movieClicked = pyqtSignal(
+        str
+    )  # Signal emitted when the movie card is clicked, passing the movie title
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.make_card()
+        self.make_card()  # Set up the UI components
 
     def make_card(self):
         self.setMaximumSize(300, 500)
@@ -36,18 +38,20 @@ class MovieCard(QWidget):
         layout.addWidget(self.poster_label, 1, 0, 1, 2)
         layout.addWidget(self.title_label, 2, 0, 1, 2)
 
-        # Connect event
+        # Connect the mouse press event to the on_mouse_press method
         self.mousePressEvent = self.on_mouse_press
 
     def set_card(self, title, poster_path):
-        self.title_label.setText(title)
-        self.set_movie_poster(poster_path)
+        self.title_label.setText(title)  # Set the movie title
+        self.set_movie_poster(poster_path)  # Set the movie poster
 
     def set_movie_poster(self, image_data):
         pixmap = QPixmap()
-        pixmap.loadFromData(image_data)
+        pixmap.loadFromData(image_data)  # Load the image data into the pixmap
         self.poster_label.setMaximumSize(233, 344)
-        self.poster_label.setPixmap(pixmap)
+        self.poster_label.setPixmap(pixmap)  # Set the pixmap on the poster label
 
     def on_mouse_press(self, event):
-        self.movieClicked.emit(self.title_label.text())
+        self.movieClicked.emit(
+            self.title_label.text()
+        )  # Emit the movieClicked signal with the movie title when clicked
