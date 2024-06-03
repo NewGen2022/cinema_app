@@ -3,14 +3,20 @@ from PyQt5.QtWidgets import QMainWindow, QScrollArea, QWidget, QHBoxLayout, QApp
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QWheelEvent
 from PyQt5.uic import loadUi
-from db_connection import database
 from main_window.movieCard import MovieCard
 from functools import partial
 
+from HALL.test import SessionWindow
+
 
 class MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, app, database):
         super(MainWindow, self).__init__()
+        self.app = app
+        self.database = database
+
+        self.session_window = None
+
         loadUi("./main_window/moviesUI.ui", self)
 
         self.setWindowTitle("MainWindow")
@@ -25,7 +31,7 @@ class MainWindow(QMainWindow):
         self.connect_all_events()
         query_movie_info = """SELECT DISTINCT Sessions.id_kino,  kino.name_kino, kino.image_kino FROM db_findtick.Sessions
 join db_findtick.kino on Sessions.id_kino = kino.id_kino;"""
-        self.movie_info = database.execute_query(query_movie_info)
+        self.movie_info = self.database.execute_query(query_movie_info)
         self.movie_ids = []
         self.movie_titles = []
         self.movie_posters = []
@@ -65,6 +71,9 @@ join db_findtick.kino on Sessions.id_kino = kino.id_kino;"""
 
     def on_movie_clicked(self, movie_id):
         print("Movie clicked, ID:", movie_id)
+
+        self.session_window = SessionWindow(movie_id, self.database)
+        self.session_window.show()
 
     def wheelEvent(self, event: QWheelEvent):
         if event.modifiers() & Qt.ControlModifier:
