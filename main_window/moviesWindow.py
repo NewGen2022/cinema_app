@@ -1,12 +1,10 @@
-# Assuming this is already implemented as shown earlier
 from PyQt5.QtWidgets import QMainWindow, QScrollArea, QWidget, QHBoxLayout, QApplication
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QWheelEvent
 from PyQt5.uic import loadUi
 from main_window.movieCard import MovieCard
 from functools import partial
-
-from HALL.session import SessionWindow
+from hall.session import SessionWindow
 
 
 class MainWindow(QMainWindow):
@@ -29,9 +27,12 @@ class MainWindow(QMainWindow):
         self.show()
 
         self.connect_all_events()
+        connection = self.database.connection
+        cursor = connection.cursor()
         query_movie_info = """SELECT DISTINCT Sessions.id_kino,  kino.name_kino, kino.image_kino FROM db_findtick.Sessions
 join db_findtick.kino on Sessions.id_kino = kino.id_kino;"""
-        self.movie_info = self.database.execute_query(query_movie_info)
+        cursor.execute(query_movie_info)
+        self.movie_info = cursor.fetchall()
         self.movie_ids = []
         self.movie_titles = []
         self.movie_posters = []
@@ -72,7 +73,7 @@ join db_findtick.kino on Sessions.id_kino = kino.id_kino;"""
     def on_movie_clicked(self, movie_id):
         print("Movie clicked, ID:", movie_id)
 
-        self.session_window = SessionWindow(movie_id, self.database)
+        self.session_window = SessionWindow(self.app, movie_id, self.database)
         self.session_window.show()
 
     def wheelEvent(self, event: QWheelEvent):
