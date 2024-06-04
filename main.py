@@ -8,7 +8,7 @@ from db_connection import DataBase
 def run_application():
     app = QApplication(sys.argv)
 
-    database = DataBase()
+    database = DataBase(sys.argv)
 
     # Run the login window
     login_window = login.Login(database)
@@ -18,7 +18,7 @@ def run_application():
         main_window = moviesWindow.MainWindow(app, database)
         main_window.show()
 
-    sys.exit(app.exec_())
+        sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
