@@ -11,13 +11,16 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QSize, Qt, QRect
 from PyQt5.QtGui import QFont, QImage, QPixmap
+from hall.hall import HallWindow
 
 
 class SessionWindow(QMainWindow):
-    def __init__(self, id_kino, database):
+    def __init__(self, app, id_kino, database):
         super().__init__()
+        self.app = app
         self.id_kino = id_kino
         self.database = database
+        self.hall_window = None
         self.setup_ui()
 
     def setup_ui(self):
@@ -267,8 +270,11 @@ class SessionWindow(QMainWindow):
         sender = self.sender()
         session_info = sender.property("session_info")
 
-        print(session_info["id_Hall"])
-        print(session_info["nomer_S"])
+        hall_id = session_info["id_Hall"]
+        nomer_s = session_info["nomer_S"]
+        self.hall_window = HallWindow(hall_id, nomer_s, self.database)
+        self.hall_window.setFixedSize(1920, 1080)
+        self.hall_window.showFullScreen()
 
     def generate_session_buttons(self):
         connection = self.database.connection
