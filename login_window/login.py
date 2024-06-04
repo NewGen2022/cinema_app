@@ -19,8 +19,11 @@ class Login(ctk.CTk):
         self.isLoginSuccessful = False
 
         # query usernames and logins
+        connection = self.database.connection
+        cursor = connection.cursor()
         query_login = "SELECT * FROM db_findtick.authorization"
-        self.username_passwords = self.database.execute_query(query_login)
+        cursor.execute(query_login)
+        self.username_passwords = cursor.fetchall()
 
         self.set_window_appearance()
         self.center_window()
