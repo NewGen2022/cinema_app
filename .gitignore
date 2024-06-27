@@ -1,0 +1,13 @@
+/login_window/__pycache__/
+/main_window/__pycache__/
+
+/__pycache__/
+/adminDashBoard/
+/seats/
+/seats_window/
+/movie_description/
+
+/prubyl.ui
+/about.ui
+
+/db_connection.py
