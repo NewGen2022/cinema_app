@@ -10,6 +10,8 @@ from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 import base64
 import qrcode
+from PySide6.QtCore import Qt
+from datetime import datetime, timedelta
 
 
 class HelpWindow(QtWidgets.QWidget):
@@ -40,7 +42,7 @@ class HelpWindow(QtWidgets.QWidget):
         title_label.setFont(QtGui.QFont("Arial", 22))
 
         close_button = QtWidgets.QPushButton()
-        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close2.png")))
+        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close.png")))
         close_button.setIconSize(QtCore.QSize(40, 40))
         close_button.setStyleSheet("background-color: transparent; border: none;")
         close_button.clicked.connect(self.close)
@@ -164,7 +166,7 @@ class SeatInfoDialog(QtWidgets.QWidget):
         self.scroll_area.setWidget(self.ticket_container)
 
         close_button = QtWidgets.QPushButton()
-        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close2.png")))
+        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close.png")))
         close_button.setIconSize(QtCore.QSize(40, 40))
         close_button.setStyleSheet("background-color: transparent; border: none;")
         close_button.clicked.connect(self.toggle_visibility)
@@ -307,18 +309,19 @@ class HallWindow(QtWidgets.QWidget):
         self.help_window = None
         self.database = database
 
+        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+
         self.id_Hall = id_Hall
         self.nomer_S = nomer_S
 
         layout = QtWidgets.QVBoxLayout(self)
         layout.setSpacing(10)
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
-
         top_layout = QtWidgets.QHBoxLayout()
         layout.addLayout(top_layout)
 
         close_button = QtWidgets.QPushButton()
-        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close.png")))
+        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/exit.png")))
         close_button.setIconSize(QtCore.QSize(30, 30))
         close_button.setStyleSheet("background-color: transparent; border: none;")
         close_button.clicked.connect(self.close)
@@ -329,19 +332,49 @@ class HallWindow(QtWidgets.QWidget):
         help_button.setStyleSheet("background-color: transparent; border: none;")
         help_button.clicked.connect(self.show_help_window)
 
-        top_layout.addWidget(help_button)
-        top_layout.setSpacing(20)
-        top_layout.addWidget(close_button)
-        top_layout.setAlignment(QtCore.Qt.AlignRight)
+        ########################################Змінити#############################################
+        top_info = QtWidgets.QWidget()
+        top_info_layout = QtWidgets.QHBoxLayout(top_info)
+
+        self.text_container1 = QtWidgets.QVBoxLayout()
+        self.text_label1 = QtWidgets.QLabel()
+        self.text_label1.setStyleSheet("font-size: 16px; font-weight: 600;")
+        self.text_label1.setFixedWidth(350)
+        self.text_container1.addWidget(self.text_label1)
+        self.info_details()
+
+        text_container2 = QtWidgets.QVBoxLayout()
+        text_label2 = QtWidgets.QLabel()
+        text_label2.setText(
+            "<font color='blue'>Вільні місця</font><br><font color='red'>Куплені місця</font></br><br><font color='grey'>Заброньовані місця</font></br>"
+        )
+        text_label2.setStyleSheet("font-size: 16px; font-weight: 600;")
+        text_container2.addWidget(text_label2)
+
+        top_info_layout.addLayout(self.text_container1)
+        top_info_layout.addSpacing(520)
+        top_info_layout.addLayout(text_container2)
+
+        top_layout.addWidget(top_info)
+
+        top_layout.addStretch()
+
+        top_layout.addWidget(
+            help_button, alignment=QtCore.Qt.AlignRight | QtCore.Qt.AlignTop
+        )
+        top_layout.addWidget(
+            close_button, alignment=QtCore.Qt.AlignRight | QtCore.Qt.AlignTop
+        )
+
+        top_layout.setAlignment(QtCore.Qt.AlignTop)
 
         screen_container = QtWidgets.QLabel()
-        s_pixmap = QtGui.QPixmap("./hall/SCREEN2.png")
-        scaled_pixmap = s_pixmap.scaled(
-            QtCore.QSize(1180, 960), QtCore.Qt.KeepAspectRatio
-        )
-        screen_container.setPixmap(scaled_pixmap)
-        screen_container.setAlignment(QtCore.Qt.AlignCenter)
 
+        s_pixmap = QtGui.QIcon("./hall/screen.png")
+        screen_container.setPixmap(s_pixmap.pixmap(QtCore.QSize(1180, 960)))
+
+        screen_container.setAlignment(QtCore.Qt.AlignCenter)
+        ##############################################################################################
         sub_container = QtWidgets.QHBoxLayout()
 
         self.button_container = QtWidgets.QWidget()
@@ -416,18 +449,18 @@ class HallWindow(QtWidgets.QWidget):
                         """
         )
 
-        free_button = QtWidgets.QPushButton("Звільнити місце")
+        free_button = QtWidgets.QPushButton("Повернути білет")
         free_button.setFixedSize(230, 50)
         free_button.setStyleSheet(
             """
                         QPushButton {
-                            background-color: blue; 
+                            background-color: green; 
                             color: white; 
                             font-size: 22px; 
                             border-radius: 20px;
                         }
                         QPushButton:pressed { 
-                            background-color: darkblue; 
+                            background-color: green; 
                             color: lightgray; 
                         }
                         """
@@ -537,6 +570,32 @@ class HallWindow(QtWidgets.QWidget):
 
             self.button_layout.addLayout(row_layout)
 
+    ############################Додати##################################
+    def info_details(self):
+        connection = self.database.connection
+        cursor = connection.cursor()
+        query = """
+        SELECT kino.name_kino, All_Halls.name_hall, 
+               DATE_FORMAT(Sessions.start_s, '%%H:%%i') AS start_s, 
+               DATE_FORMAT(Sessions.end_s, '%%H:%%i') AS end_s
+        FROM db_findtick.Sessions
+        JOIN db_findtick.kino ON Sessions.id_kino = kino.id_kino
+        JOIN db_findtick.All_Halls ON Sessions.id_Hall = All_Halls.id_Hall
+        WHERE Sessions.id_Hall = %s AND Sessions.nomer_S = %s;
+        """
+        cursor.execute(query, (self.id_Hall, self.nomer_S))
+        cinema_details = cursor.fetchall()
+
+        details_text = ""
+        for detail in cinema_details:
+            details_text += (
+                f"Назва: «{detail[0]}»\nЗала: {detail[1]}\nЧас: {detail[2]}-{detail[3]}"
+            )
+
+        self.text_label1.setText(details_text)
+
+    ###########################################################################
+
     def get_button_style(self, status, selected=False):
         if status == 1:
             if selected:
@@ -616,6 +675,33 @@ class HallWindow(QtWidgets.QWidget):
                     }
                     QPushButton:pressed { 
                         background-color: #484848; 
+                        color: lightgray; 
+                    }
+                """
+        elif status == 4:
+            if selected:
+                return """
+                    QPushButton { 
+                        border-radius: 10px;
+                        color: lightgray;
+                        font-size: 18px;
+                        background-color: darkblue;
+                    }
+                    QPushButton:pressed { 
+                        background-color: darkblue; 
+                        color: lightgray; 
+                    }
+                """
+            else:
+                return """
+                    QPushButton { 
+                        border-radius: 10px;
+                        color: white;
+                        font-size: 18px;
+                        background-color: blue;
+                    }
+                    QPushButton:pressed { 
+                        background-color: darkblue; 
                         color: lightgray; 
                     }
                 """
@@ -820,9 +906,10 @@ class HallWindow(QtWidgets.QWidget):
             qr = qrcode.QRCode(
                 version=1,
                 error_correction=qrcode.constants.ERROR_CORRECT_L,
-                box_size=5,
-                border=1,
+                box_size=4,
+                border=0,
             )
+            ################################ЗМІНИ######################
             qr.add_data(
                 "\n".join(
                     [
@@ -830,12 +917,13 @@ class HallWindow(QtWidgets.QWidget):
                         str(seat_info[3]),
                         str(seat_info[4]),
                         f"{seat_info[8]}-{seat_info[5]}",
-                        str(seat_info[0]),
-                        str(seat_info[1]),
-                        str(seat_info[2]),
+                        f"Зала: {seat_info[0]}",
+                        f"Ряд: {seat_info[1]}",
+                        f"Місце: {seat_info[2]}",
                     ]
                 )
             )
+            ############################################################
             qr.make(fit=True)
 
             qr_image = qr.make_image(fill_color="black", back_color="white")
@@ -885,9 +973,30 @@ class HallWindow(QtWidgets.QWidget):
         total_price = sum(info[6] for info in self.selected_seats_info)
         total_price_text = f"До сплати: {total_price} {currency}"
 
+        ukrainian_months = [
+            "січня",
+            "лютого",
+            "березня",
+            "квітня",
+            "травня",
+            "червня",
+            "липня",
+            "серпня",
+            "вересня",
+            "жовтня",
+            "листопада",
+            "грудня",
+        ]
+
+        current_datetime = datetime.now()
+        future_datetime = current_datetime + timedelta(minutes=15)
+        month_index = future_datetime.month - 1
+        month_in_words = ukrainian_months[month_index]
+        end_time = future_datetime.strftime(f"%H:%M %d {month_in_words}")
+
         total_price_html = (
             f"<p style='font-weight: bold; font-size: 22px;'>{total_price_text}</p>"
-            f"<p style='font-weight: bold; font-size: 22px;'>Час дії броні припинется через 15 хвилин!\n</p>"
+            f"<p style='font-weight: bold; font-size: 22px;'>Час дії броні припинется в {end_time}!\n</p>"
         )
         message.attach(MIMEText(total_price_html, "html", "utf-8"))
 
@@ -1018,47 +1127,67 @@ class HallWindow(QtWidgets.QWidget):
             QMessageBox.information(self, "Інформація", "Немає вибраних місць.")
             return
 
-        with self.database.connection.cursor() as cursor:
-            for seat_info in self.selected_seats:
-                num_seat, id_rows, status = seat_info
-                sql = """
-                        UPDATE `db_findtick`.`Seats`
-                        SET status = 1
-                        WHERE (`num_seats` = %s) AND (`id_Hall` = %s) AND (`nomer_S` = %s) AND (`id_Rows` = %s);
-                        """
-                cursor.execute(sql, (num_seat, self.id_Hall, self.nomer_S, id_rows))
-                self.database.connection.commit()
+        # Confirm the action with the user
+        reply = QMessageBox.question(
+            self,
+            "Підтвердження",
+            "Ви впевнені, що хочете звільнити вибрані місця?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
 
-        self.selected_seats = set()
-        self.update_seat_container()
-        QMessageBox.information(self, "Успішно", "Місця успішно звільнені.")
+        if reply == QMessageBox.Yes:
+            with self.database.connection.cursor() as cursor:
+                for seat_info in self.selected_seats:
+                    num_seat, id_rows, status = seat_info
+                    sql = """
+                            UPDATE `db_findtick`.`Seats`
+                            SET status = 4
+                            WHERE (`num_seats` = %s) AND (`id_Hall` = %s) AND (`nomer_S` = %s) AND (`id_Rows` = %s);
+                            """
+                    cursor.execute(sql, (num_seat, self.id_Hall, self.nomer_S, id_rows))
+                    self.database.connection.commit()
 
-        for i in reversed(
-            range(self.seat_info_dialog.ticket_label_container_layout.count())
-        ):
-            widget = self.seat_info_dialog.ticket_label_container_layout.itemAt(
-                i
-            ).widget()
-            if widget is not None:
-                widget.deleteLater()
+            self.selected_seats = set()
+            self.update_seat_container()
+            QMessageBox.information(self, "Успішно", "Білет упішно повернуто")
 
-        self.selected_seats_info = []
-        self.update_total_price_label()
+            for i in reversed(
+                range(self.seat_info_dialog.ticket_label_container_layout.count())
+            ):
+                widget = self.seat_info_dialog.ticket_label_container_layout.itemAt(
+                    i
+                ).widget()
+                if widget is not None:
+                    widget.deleteLater()
+
+            self.selected_seats_info = []
+            self.update_total_price_label()
 
     def free_all_seats(self):
-        with self.database.connection.cursor() as cursor:
-            sql = """
-                UPDATE Seats
-                SET status = 1
-                WHERE id_Hall = %s AND nomer_S = %s
-                """
-            cursor.execute(sql, (self.id_Hall, self.nomer_S))
-            self.database.connection.commit()
-        self.selected_seats = set()
-        self.update_seat_container()
-        self.selected_seats_info = []
-        self.update_total_price_label()
-        QMessageBox.information(self, "Успішно", "Зала успішно звільнена.")
+
+        reply = QMessageBox.question(
+            self,
+            "Підтвердження",
+            "Ви впевнені, що хочете звільнити залу?",
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+
+        if reply == QMessageBox.Yes:
+            with self.database.connection.cursor() as cursor:
+                sql = """
+                    UPDATE Seats
+                    SET status = 1
+                    WHERE id_Hall = %s AND nomer_S = %s
+                    """
+                cursor.execute(sql, (self.id_Hall, self.nomer_S))
+                self.database.connection.commit()
+            self.selected_seats = set()
+            self.update_seat_container()
+            self.selected_seats_info = []
+            self.update_total_price_label()
+            QMessageBox.information(self, "Успішно", "Зала успішно звільнена.")
 
     def update_seat_container(self):
         connection = self.database.connection
@@ -1109,5 +1238,4 @@ class HallWindow(QtWidgets.QWidget):
             self.button_layout.addLayout(row_layout)
 
     def closeEvent(self, event):
-        self.database.close_db_connection()
         self.seat_info_dialog.close()

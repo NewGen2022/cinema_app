@@ -1,16 +1,15 @@
-from PyQt5.QtWidgets import (
+from PySide6.QtWidgets import (
     QMainWindow,
-    QLabel,
     QWidget,
     QVBoxLayout,
     QHBoxLayout,
+    QLabel,
     QSpacerItem,
     QSizePolicy,
-    QStatusBar,
     QPushButton,
 )
-from PyQt5.QtCore import QSize, Qt, QRect
-from PyQt5.QtGui import QFont, QImage, QPixmap
+from PySide6.QtCore import Qt, QSize, QRect
+from PySide6.QtGui import QPixmap, QFont, QImage, QIcon
 from hall.hall import HallWindow
 
 
@@ -20,6 +19,7 @@ class SessionWindow(QMainWindow):
         self.app = app
         self.id_kino = id_kino
         self.database = database
+        self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
         self.hall_window = None
         self.setup_ui()
 
@@ -27,21 +27,54 @@ class SessionWindow(QMainWindow):
         self.setObjectName("SessionWindow")
         self.setWindowIconText("SessionWindow")
         self.resize(1920, 1080)
+        self.showFullScreen()
 
         font = QFont()
         font.setFamily("Century Gothic")
         font.setPointSize(16)
         font.setBold(False)
         self.setFont(font)
-        self.setStyleSheet("")
+        self.setStyleSheet(
+            "background-color: rgb(255, 255, 255);"
+        )  ###################Зміни#######################
 
+        ###########################################Додав###########################################
+        layout = QVBoxLayout()
+        self.top_layout = QHBoxLayout()
+        layout.addLayout(self.top_layout)
+
+        self.close_button = QPushButton()
+        self.close_button.setIcon(QIcon(QPixmap("./hall/exit.png")))
+        self.close_button.setIconSize(QSize(30, 30))
+        self.close_button.setStyleSheet("background-color: transparent; border: none;")
+        self.close_button.clicked.connect(self.close)
+
+        logo = QIcon("./main_window/fintick-logo.png")
+        self.logo = QLabel()
+        self.logo.setPixmap(logo.pixmap(QSize(120, 65)))
+        self.logo.setStyleSheet("padding-top: 55px;")
+
+        self.top_layout.addSpacing(230)
+        self.top_layout.addWidget(QWidget())
+        self.top_layout.addWidget(self.logo)
+        self.top_layout.addWidget(QWidget(), 1)
+        self.top_layout.addWidget(
+            self.close_button, alignment=Qt.AlignRight | Qt.AlignTop
+        )
+
+        self.top_layout.setAlignment(Qt.AlignTop)
+        ############################################################################################
+
+        ###########################################Змінив###########################################
         self.centralwidget = QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.centralwidget.setStyleSheet("")
-
+        self.centralwidget.setLayout(layout)
+        self.setCentralWidget(self.centralwidget)
+        ############################################################################################
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName("widget")
-        self.widget.setGeometry(QRect(100, 80, 1720, 820))
+        self.widget.setGeometry(QRect(100, 200, 1720, 720))
 
         self.main_counteiner = QVBoxLayout(self.widget)
         self.main_counteiner.setObjectName("main_counteiner")
@@ -104,6 +137,9 @@ class SessionWindow(QMainWindow):
 
         # Country Container
         self.country_container = QHBoxLayout()
+        self.country_container.setSpacing(
+            12
+        )  #################################Добавить#########################
         self.country_container.setObjectName("country_container")
 
         self.country = QLabel(self.widget)
@@ -115,6 +151,9 @@ class SessionWindow(QMainWindow):
 
         self.label_country = QLabel(self.widget)
         self.label_country.setObjectName("label_country")
+        self.label_country.setFont(
+            font
+        )  #################################Добавить#########################
         self.country_container.addWidget(self.label_country)
         self.info_conteiner.addLayout(self.country_container)
 
@@ -213,7 +252,9 @@ class SessionWindow(QMainWindow):
         self.main_counteiner.addLayout(self.Botton_conteiner)
 
         self.setCentralWidget(self.centralwidget)
-        self.statusbar = QStatusBar(self)
+        self.statusbar = (
+            self.statusBar()
+        )  ###################################Зміна###############################
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
@@ -293,6 +334,10 @@ class SessionWindow(QMainWindow):
         sessions = cursor.fetchall()
 
         self.session_info_list = []
+
+        ################################Додати#####################################
+        sessions = sorted(sessions, key=lambda x: x[3])
+        ###########################################################################
 
         for result in sessions:
             (
