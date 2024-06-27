@@ -3,8 +3,6 @@ import customtkinter as ctk
 from datetime import datetime
 from login_window.resizeImage import ResizedImage
 
-# from db_connection import database
-
 WIDTH_WINDOW = 1000
 HEIGHT_WINDOW = 600
 FONT_FAMILY = "Franklin Gothic Heavy"
@@ -15,6 +13,7 @@ class Login(ctk.CTk):
         super().__init__()
 
         self.database = database
+        self.access_rights = 0
 
         self.isLoginSuccessful = False
 
@@ -24,6 +23,7 @@ class Login(ctk.CTk):
         query_login = "SELECT * FROM db_findtick.authorization"
         cursor.execute(query_login)
         self.username_passwords = cursor.fetchall()
+        # print(self.username_passwords)
 
         self.set_window_appearance()
         self.center_window()
@@ -120,12 +120,19 @@ class Login(ctk.CTk):
                 if password == entry[1]:
                     time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                    logs = f"{username}    {password}    {entry[2]}    ВХІД    {time}\n"
+                    # logs = f"{username}    {password}    {entry[2]}    ВХІД    {time}\n"
+                    # with open("./login_window/logs.txt", "a", encoding="utf-8") as f:
+                    #     f.write(logs)
 
-                    with open("./login_window/logs.txt", "a", encoding="utf-8") as f:
-                        f.write(logs)
+                    connection = self.database.connection
+                    cursor = connection.cursor()
+                    query = "INSERT INTO db_findtick.actions (user, actions, date_actions) VALUES (%s, %s, %s)"
+                    values = (username, "ВХІД", time)
+                    cursor.execute(query, values)
+                    connection.commit()
 
                     self.isLoginSuccessful = True
+                    self.access_rights = entry[2]
                     self.destroy()
                     return
                 else:
@@ -169,4 +176,4 @@ class Login(ctk.CTk):
     # run login window
     def run_login_process(self):
         self.mainloop()
-        return self.isLoginSuccessful
+        return self.isLoginSuccessful, self.access_rights
