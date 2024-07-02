@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (
 )
 from main_window.movieCard import MovieCard
 from hall.session import SessionWindow
+from main_window.helpWindow import HelpWindow
 
 
 class MainWindow(QMainWindow):
@@ -145,8 +146,35 @@ class MainWindow(QMainWindow):
         self.search.setPlaceholderText("Пошук")
         self.help_button.setText("? Help")
 
+        self.help_button.clicked.connect(self.open_help_window)
+
     def handle_search(self):
-        print("Search")
+        search_text = self.search.text().strip()
+
+        connection = self.database.connection
+        cursor = connection.cursor()
+
+        if search_text:
+            query_movie_info = f"""SELECT DISTINCT Sessions.id_kino, kino.name_kino, kino.image_kino 
+                                FROM db_findtick.Sessions
+                                JOIN db_findtick.kino ON Sessions.id_kino = kino.id_kino
+                                WHERE kino.name_kino LIKE '%{search_text}%';"""
+        else:
+            query_movie_info = """SELECT DISTINCT Sessions.id_kino, kino.name_kino, kino.image_kino 
+                                FROM db_findtick.Sessions
+                                JOIN db_findtick.kino ON Sessions.id_kino = kino.id_kino;"""
+
+        cursor.execute(query_movie_info)
+        self.movie_info = cursor.fetchall()
+        self.movie_ids = []
+        self.movie_titles = []
+        self.movie_posters = []
+        for item in self.movie_info:
+            self.movie_ids.append(item[0])
+            self.movie_titles.append(item[1])
+            self.movie_posters.append(item[2])
+
+        self.display_all_movies()
 
     def display_all_movies(self):
         scroll_area = self.findChild(QScrollArea, "scroll_area")
@@ -201,10 +229,15 @@ class MainWindow(QMainWindow):
         self.session_window.show()
 
     def wheelEvent(self, event: QWheelEvent):
-        if event.modifiers() & Qt.ControlModifier:
-            scroll_area = self.findChild(QScrollArea, "scroll_area")
-            horizontal_bar = scroll_area.horizontalScrollBar()
-            delta = event.angleDelta().y()
-            horizontal_bar.setValue(horizontal_bar.value() - delta // 2)
+        scroll_area = self.findChild(QScrollArea, "scroll_area")
+        if scroll_area is None:
+            super().wheelEvent(event)
             return
-        super().wheelEvent(event)
+
+        horizontal_bar = scroll_area.horizontalScrollBar()
+        delta = event.angleDelta().y()
+        horizontal_bar.setValue(horizontal_bar.value() - delta // 2)
+
+    def open_help_window(self):
+        help_window = HelpWindow(self)
+        help_window.exec_()
