@@ -4,6 +4,7 @@ from main_window import moviesWindow
 from login_window import login
 from db_connection import DataBase
 from choice import Choice
+from admin.widget import Widget
 
 
 def run_application():
@@ -11,13 +12,13 @@ def run_application():
     database = DataBase(app, sys.argv)
 
     login_window = login.Login(database)
-    login_successful, access_right = login_window.run_login_process()
+    login_successful, access_right, login_name = login_window.run_login_process()
 
     if login_successful:
         if access_right == 1:
             type_of_window = Choice(app, database)
             type_of_window.choice_made.connect(
-                lambda choice: handle_choice(choice, app, database)
+                lambda choice: handle_choice(choice, app, database, login_name)
             )
             type_of_window.show()
         else:
@@ -26,9 +27,10 @@ def run_application():
         sys.exit(app.exec_())
 
 
-def handle_choice(choice, app, database):
+def handle_choice(choice, app, database, login_name):
     if choice == "адмін":
-        print("ADMIN WINDOW IMITATION")
+        window = Widget(database, login_name)
+        window.show()
     else:
         main_window = moviesWindow.MainWindow(app, database)
         main_window.show()
