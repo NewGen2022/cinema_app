@@ -176,4 +176,4 @@ class Login(ctk.CTk):
     # run login window
     def run_login_process(self):
         self.mainloop()
-        return self.isLoginSuccessful, self.access_rights
+        return self.isLoginSuccessful, self.access_rights, self.username.get()
