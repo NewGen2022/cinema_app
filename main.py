@@ -22,7 +22,7 @@ def run_application():
             )
             type_of_window.show()
         else:
-            handle_choice("касир", app, database)
+            handle_choice("касир", app, database, login_name)
 
         sys.exit(app.exec_())
 
