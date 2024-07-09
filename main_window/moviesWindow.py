@@ -73,7 +73,7 @@ class MainWindow(QMainWindow):
         self.logo_label.setObjectName("logo_label")
         self.logo_label.setMinimumSize(QSize(120, 70))
         self.logo_label.setMaximumSize(QSize(120, 70))
-        self.logo_label.setPixmap(QPixmap("./main_window/fintick-logo.png"))
+        self.logo_label.setPixmap(QPixmap("./assets/fintick-logo.png"))
         self.logo_label.setScaledContents(True)
 
         self.horizontal_layout.addWidget(self.logo_label)
