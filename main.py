@@ -29,8 +29,8 @@ def run_application():
 
 def handle_choice(choice, app, database, login_name):
     if choice == "адмін":
-        window = Widget(database, login_name)
-        window.show()
+        helpWindow = Widget(database, login_name)
+        helpWindow.show()
     else:
         main_window = moviesWindow.MainWindow(app, database)
         main_window.show()
