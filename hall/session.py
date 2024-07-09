@@ -26,7 +26,6 @@ class SessionWindow(QMainWindow):
     def setup_ui(self):
         self.setObjectName("SessionWindow")
         self.setWindowIconText("SessionWindow")
-        self.resize(1920, 1080)
         self.showFullScreen()
 
         font = QFont()
@@ -35,10 +34,12 @@ class SessionWindow(QMainWindow):
         font.setBold(False)
         self.setFont(font)
         self.setStyleSheet(
-            "background-color: rgb(255, 255, 255);"
-        )  ###################Зміни#######################
+            """
+            background-color: #292929;
+            color: white;
+            """
+        )
 
-        ###########################################Додав###########################################
         layout = QVBoxLayout()
         self.top_layout = QHBoxLayout()
         layout.addLayout(self.top_layout)
@@ -63,15 +64,13 @@ class SessionWindow(QMainWindow):
         )
 
         self.top_layout.setAlignment(Qt.AlignTop)
-        ############################################################################################
 
-        ###########################################Змінив###########################################
         self.centralwidget = QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.centralwidget.setStyleSheet("")
         self.centralwidget.setLayout(layout)
         self.setCentralWidget(self.centralwidget)
-        ############################################################################################
+
         self.widget = QWidget(self.centralwidget)
         self.widget.setObjectName("widget")
         self.widget.setGeometry(QRect(100, 200, 1720, 720))
@@ -137,9 +136,7 @@ class SessionWindow(QMainWindow):
 
         # Country Container
         self.country_container = QHBoxLayout()
-        self.country_container.setSpacing(
-            12
-        )  #################################Добавить#########################
+        self.country_container.setSpacing(12)
         self.country_container.setObjectName("country_container")
 
         self.country = QLabel(self.widget)
@@ -151,9 +148,7 @@ class SessionWindow(QMainWindow):
 
         self.label_country = QLabel(self.widget)
         self.label_country.setObjectName("label_country")
-        self.label_country.setFont(
-            font
-        )  #################################Добавить#########################
+        self.label_country.setFont(font)
         self.country_container.addWidget(self.label_country)
         self.info_conteiner.addLayout(self.country_container)
 
@@ -252,9 +247,7 @@ class SessionWindow(QMainWindow):
         self.main_counteiner.addLayout(self.Botton_conteiner)
 
         self.setCentralWidget(self.centralwidget)
-        self.statusbar = (
-            self.statusBar()
-        )  ###################################Зміна###############################
+        self.statusbar = self.statusBar()
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
 
@@ -335,9 +328,7 @@ class SessionWindow(QMainWindow):
 
         self.session_info_list = []
 
-        ################################Додати#####################################
         sessions = sorted(sessions, key=lambda x: x[3])
-        ###########################################################################
 
         for result in sessions:
             (
@@ -361,17 +352,17 @@ class SessionWindow(QMainWindow):
             button.setStyleSheet(
                 """
                 QPushButton {
-                    background-color: #FF8000;
+                    background-color: #ff0055;
                     border-radius: 30px;
                     color: white; 
                     font-size: 18px;
                     font-weight: bold;
                 }
                 QPushButton:hover {
-                    background-color: #FF5000;
+                    background-color: #b5023e;
                 }
                 QPushButton:pressed {
-                    background-color: #FFF000;
+                    background-color: #750027;
                 }
             """
             )

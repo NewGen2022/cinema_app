@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.app = app
         self.database = database
         self.session_window = None
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setStyleSheet("background-color: #292929;")
         self.setup_ui()
         self.connect_all_events()
 
@@ -44,8 +44,6 @@ class MainWindow(QMainWindow):
         self.display_all_movies()
 
     def setup_ui(self):
-        self.resize(1920, 1080)
-
         font = QFont()
         font.setFamilies(["Century Gothic"])
         font.setPointSize(12)
@@ -94,10 +92,12 @@ class MainWindow(QMainWindow):
         self.search.setFont(font1)
 
         self.search.setStyleSheet(
-            "border-radius: 10px;\n"
-            "padding-left: 10px;\n"
-            "background-color: rgb(230, 230, 230);\n"
-            ""
+            """border-radius: 10px;
+            padding-left: 10px;
+            background-color: #ffffff;
+            color: black;
+            font-weight: 500; 
+            """
         )
         self.horizontal_layout.addWidget(self.search)
 
@@ -109,9 +109,28 @@ class MainWindow(QMainWindow):
 
         self.help_button = QPushButton(self.central_widget)
         self.help_button.setObjectName("help_button")
-        self.help_button.setStyleSheet("background-color: rgb(230, 230, 230);")
+        self.help_button.setStyleSheet(
+            """
+            QPushButton {
+                border-radius: 5px; 
+                color: #242424; 
+                background-color: #ff0055; 
+                font-size: 18px; 
+                font-weight: 500;
+                text-align: center;
+                color: white;
+                font-weight: 700;
+            }
+            QPushButton:hover {
+                font-size: 18px;
+                padding: 100px;
+                font-weight: 900;
+                border: 1px solid rgb(255, 255, 255);
+            }
+            """
+        )
         self.help_button.setMinimumSize(QSize(90, 35))
-        self.help_button.setMaximumSize(QSize(100, 40))
+        self.help_button.setMaximumSize(QSize(150, 50))
 
         self.horizontal_layout.addWidget(self.help_button)
 
@@ -147,6 +166,8 @@ class MainWindow(QMainWindow):
         self.help_button.setText("? Help")
 
         self.help_button.clicked.connect(self.open_help_window)
+
+        self.showMaximized()
 
     def handle_search(self):
         search_text = self.search.text().strip()
@@ -207,7 +228,7 @@ class MainWindow(QMainWindow):
                 border: none;
             }
             QScrollBar::handle:horizontal {
-                background-color: #2622fb;
+                background-color: #ff0062;
                 border: none;
             }
             QScrollBar::add-page:horizontal {  

@@ -15,6 +15,7 @@ class HelpWindow(QDialog):
         self.setWindowTitle("Help")
         self.setWindowIcon(QIcon("./assets/help.png"))
         self.setFixedSize(600, 500)
+        self.setStyleSheet("background-color: white;")
 
         main_layout = QVBoxLayout(self)
 

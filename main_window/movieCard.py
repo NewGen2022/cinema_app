@@ -2,6 +2,7 @@ from PySide6.QtCore import Signal, Qt
 from PySide6.QtGui import QFont, QPixmap
 from PySide6.QtWidgets import QLabel, QGridLayout, QWidget
 
+
 class MovieCard(QWidget):
     movieClicked = Signal(str)
 
@@ -24,6 +25,7 @@ class MovieCard(QWidget):
         self.title_label.setFixedHeight(50)
         self.title_label.setAlignment(Qt.AlignCenter)
         title_font = QFont("Century Gothic", 14, QFont.Bold)
+        self.title_label.setStyleSheet("color: #ffffff;")
         self.title_label.setFont(title_font)
         self.title_label.setWordWrap(True)
 
