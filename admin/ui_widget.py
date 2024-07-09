@@ -1,52 +1,19 @@
 from PySide6.QtCore import (
     QCoreApplication,
-    QDate,
-    QDateTime,
-    QLocale,
     QMetaObject,
-    QObject,
-    QPoint,
-    QRect,
     QSize,
-    QTime,
-    QUrl,
     Qt,
 )
-from PySide6.QtGui import (
-    QBrush,
-    QColor,
-    QConicalGradient,
-    QCursor,
-    QFont,
-    QFontDatabase,
-    QGradient,
-    QIcon,
-    QImage,
-    QKeySequence,
-    QLinearGradient,
-    QPainter,
-    QPalette,
-    QPixmap,
-    QRadialGradient,
-    QTransform,
-)
+from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
-    QAbstractItemView,
-    QApplication,
     QHBoxLayout,
-    QHeaderView,
     QLabel,
-    QLineEdit,
-    QMainWindow,
     QPushButton,
     QSizePolicy,
     QSpacerItem,
-    QStatusBar,
     QTableWidget,
-    QTableWidgetItem,
     QVBoxLayout,
     QWidget,
-    QDialog,
 )
 
 
@@ -119,7 +86,7 @@ class Ui_admin_widget(object):
         self.go_to_zvit_button.setStyleSheet(
             """
                         QPushButton {
-                            background-color: grey; 
+                            background-color: #5e5e5e; 
                             color: white; 
                             font-size: 30px; 
                             border-radius: 20px;
@@ -132,6 +99,26 @@ class Ui_admin_widget(object):
         )
 
         self.verticalLayout_10.insertWidget(1, self.go_to_zvit_button)
+
+        self.about = QPushButton(self.layoutWidget, text="Про програму")
+        self.about.setObjectName("about")
+        self.about.setMinimumSize(QSize(0, 70))
+        self.about.setFont(font)
+        self.about.setStyleSheet(
+            """
+                        QPushButton {
+                            background-color: grey; 
+                            color: white; 
+                            font-size: 30px; 
+                            border-radius: 20px;
+                        }
+                        QPushButton:pressed { 
+                            background-color: lightgrey
+                            color: lightgray; 
+                        }
+                        """
+        )
+        self.verticalLayout_10.insertWidget(2, self.about)
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_9)
 
