@@ -44,7 +44,7 @@ class Login(ctk.CTk):
         frame_image.place(x=0, y=0, relwidth=0.5, relheight=1)
 
         rounded_label_image = ResizedImage(
-            frame_image, image_path="./login_window/login_photo.jpg"
+            frame_image, image_path="./assets/login_photo.jpg"
         )
         rounded_label_image.place(relx=0.5, rely=0.5, anchor="center")
 
@@ -119,10 +119,6 @@ class Login(ctk.CTk):
             if username in entry:
                 if password == entry[1]:
                     time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-                    # logs = f"{username}    {password}    {entry[2]}    ВХІД    {time}\n"
-                    # with open("./login_window/logs.txt", "a", encoding="utf-8") as f:
-                    #     f.write(logs)
 
                     connection = self.database.connection
                     cursor = connection.cursor()
