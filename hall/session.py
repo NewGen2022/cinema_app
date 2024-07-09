@@ -44,12 +44,12 @@ class SessionWindow(QMainWindow):
         layout.addLayout(self.top_layout)
 
         self.close_button = QPushButton()
-        self.close_button.setIcon(QIcon(QPixmap("./hall/exit.png")))
+        self.close_button.setIcon(QIcon(QPixmap("./assets/exit.png")))
         self.close_button.setIconSize(QSize(30, 30))
         self.close_button.setStyleSheet("background-color: transparent; border: none;")
         self.close_button.clicked.connect(self.close)
 
-        logo = QIcon("./main_window/fintick-logo.png")
+        logo = QIcon("./assets/fintick-logo.png")
         self.logo = QLabel()
         self.logo.setPixmap(logo.pixmap(QSize(120, 65)))
         self.logo.setStyleSheet("padding-top: 55px;")

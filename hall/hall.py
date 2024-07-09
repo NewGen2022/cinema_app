@@ -42,7 +42,7 @@ class HelpWindow(QtWidgets.QWidget):
         title_label.setFont(QtGui.QFont("Arial", 22))
 
         close_button = QtWidgets.QPushButton()
-        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close.png")))
+        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./assets/close.png")))
         close_button.setIconSize(QtCore.QSize(40, 40))
         close_button.setStyleSheet("background-color: transparent; border: none;")
         close_button.clicked.connect(self.close)
@@ -167,7 +167,7 @@ class SeatInfoDialog(QtWidgets.QWidget):
         self.scroll_area.setWidget(self.ticket_container)
 
         close_button = QtWidgets.QPushButton()
-        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/close.png")))
+        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./assets/close.png")))
         close_button.setIconSize(QtCore.QSize(40, 40))
         close_button.setStyleSheet("background-color: transparent; border: none;")
         close_button.clicked.connect(self.toggle_visibility)
@@ -305,7 +305,7 @@ class SeatInfoDialog(QtWidgets.QWidget):
 class HallWindow(QtWidgets.QWidget):
     def __init__(self, id_Hall, nomer_S, database):
         super().__init__()
-        self.setWindowTitle("Кинотеатр")
+        self.setWindowTitle("Кінотеатр")
         self.setGeometry(0, 0, 1920, 1080)
         self.help_window = None
         self.database = database
@@ -322,13 +322,13 @@ class HallWindow(QtWidgets.QWidget):
         layout.addLayout(top_layout)
 
         close_button = QtWidgets.QPushButton()
-        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/exit.png")))
+        close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./assets/exit.png")))
         close_button.setIconSize(QtCore.QSize(30, 30))
         close_button.setStyleSheet("background-color: transparent; border: none;")
         close_button.clicked.connect(self.close)
 
         help_button = QtWidgets.QPushButton()
-        help_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./hall/help.png")))
+        help_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./assets/help.png")))
         help_button.setIconSize(QtCore.QSize(30, 30))
         help_button.setStyleSheet("background-color: transparent; border: none;")
         help_button.clicked.connect(self.show_help_window)
@@ -371,7 +371,7 @@ class HallWindow(QtWidgets.QWidget):
 
         screen_container = QtWidgets.QLabel()
 
-        s_pixmap = QtGui.QIcon("./hall/screen.png")
+        s_pixmap = QtGui.QIcon("./assets/screen.png")
         screen_container.setPixmap(s_pixmap.pixmap(QtCore.QSize(1180, 960)))
 
         screen_container.setAlignment(QtCore.Qt.AlignCenter)
@@ -710,7 +710,7 @@ class HallWindow(QtWidgets.QWidget):
     def update_seat_info_dialog(self):
         ticket_images = []
         for index, seat_info in enumerate(self.selected_seats_info):
-            ticket_image = QPixmap("./hall/tiket.png")
+            ticket_image = QPixmap("./assets/tiket.png")
             ticket_image = ticket_image.scaled(333, 100)
             painter = QPainter(ticket_image)
             painter.setPen(QColor("black"))
@@ -866,7 +866,7 @@ class HallWindow(QtWidgets.QWidget):
 
         for index, seat_info in enumerate(self.selected_seats_info):
 
-            background_image = Image.open("./hall/ticket.png").resize((400, 582))
+            background_image = Image.open("./assets/ticket.png").resize((400, 582))
             ticket_image = background_image.copy()
 
             draw = ImageDraw.Draw(ticket_image)
@@ -1008,7 +1008,7 @@ class HallWindow(QtWidgets.QWidget):
         ticket_images = []
 
         for index, seat_info in enumerate(self.selected_seats_info):
-            background_image = Image.open("./hall/reservation_tick.png").resize(
+            background_image = Image.open("./assets/reservation_tick.png").resize(
                 (400, 582)
             )
             ticket_image = background_image.copy()
