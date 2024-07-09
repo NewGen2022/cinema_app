@@ -20,7 +20,7 @@ class Choice(QMainWindow):
         self.setWindowTitle("Вибір ролі")
         self.setFixedSize(450, 200)
 
-        icon = QIcon("./icon.ico")
+        icon = QIcon("./assets/icon.ico")
         self.setWindowIcon(icon)
 
         central_widget = QWidget(self)
