@@ -24,6 +24,7 @@ from PIL import Image
 import re
 import datetime
 from admin.ui_widget import Ui_admin_widget
+from admin.aboutWindow import AboutWindow
 
 
 class Widget(QWidget, Ui_admin_widget):
@@ -44,6 +45,7 @@ class Widget(QWidget, Ui_admin_widget):
         self.user_button.clicked.connect(self.show_table_users)
         self.add_object_button.clicked.connect(self.add_item)
         self.go_to_zvit_button.clicked.connect(self.zvit_window_show)
+        self.about.clicked.connect(self.handle_about)
         self.tableWidget.cellChanged.connect(self.change_value)
 
         self.tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -2626,6 +2628,10 @@ class Widget(QWidget, Ui_admin_widget):
         self.zvit_window.tableWidget.setColumnWidth(0, 130)
         self.zvit_window.tableWidget.setColumnWidth(1, 615)
         self.zvit_window.tableWidget.setColumnWidth(2, 250)
+
+    def handle_about(self):
+        aboutWindow = AboutWindow()
+        aboutWindow.exec_()
 
 
 class CustomDialog(QDialog):
