@@ -13,7 +13,7 @@ class HelpWindow(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Help")
-        self.setWindowIcon(QIcon("./assets/help.png"))
+        self.setWindowIcon(QIcon("./assets/help-black.png"))
         self.setFixedSize(600, 500)
         self.setStyleSheet("background-color: white;")
 

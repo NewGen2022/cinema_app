@@ -56,20 +56,20 @@ class HelpWindow(QtWidgets.QWidget):
         self.text_widget = QtWidgets.QTextEdit()
 
         text = """
-        <p>Місця позначенні <strong><font color="blue" style="letter-spacing: 1px;">СИНІМ КОЛІРОМ</font></strong> - вільні місця які покупець може купити або забронювати.
-        Після вибору вільного місця лівою кнопкою миші, воно змінює колір на <strong><font color="darkblue" style="letter-spacing: 1px;">ТЕМНО-СИНІЙ</font></strong> .</p>
-        <p>Місця позначені <strong><font color="grey" style="letter-spacing: 1px;">СІРИМ КОЛІРОМ</font></strong> - заброньовані місця які може купити покупець протягом 15 хвилин, в іншому випадку місця автоматично <strong><font color="blue">звільняться</font></strong>. 
+        <p>Місця позначені <strong><font color="blue" style="letter-spacing: 1px;">СИНІМ</font></strong> кольором - вільні місця, які покупець може купити або забронювати.
+        Після вибору вільного місця лівою кнопкою миші, воно змінює колір на <strong><font color="darkblue" style="letter-spacing: 1px;">ТЕМНО-СИНІЙ</font></strong>.</p>
+        <p>Місця позначені <strong><font color="grey" style="letter-spacing: 1px;">СІРИМ</font></strong> кольором - заброньовані місця, які покупець може купити протягом 15 хвилин, в іншому випадку місця автоматично <strong>ЗВІЛЬНЯЮТЬСЯ</strong>. 
         Після вибору заброньованого місця, воно змінює колір на <strong><font color="#484848" style="letter-spacing: 1px;">ТЕМНО-СІРИЙ</font></strong>.</p>
-        <p>Місця позначені <strong><font color="red" style="letter-spacing: 1px;">ЧЕРВОНИМ КОЛЬОРОМ</font></strong> - продані місця. 
-        Після вибору проданого місця, воно змінює колір на <strong><font color="darkred" style="letter-spacing: 1px;">ТЕМНО-ЧЕРВОНИЙ</font></strong>.</p>
-        <p>Після вибору будь-якого місця (окрім <strong><font color="red">проданого</font></strong>) з'являється вікно ЗАМОВЛЕННЯ із списком вибраних білетів та загальною вартістю за обрані білети. 
-        Коли покупець вибрав білети які хоче купити/забронювати, касир вводить електронну пошту покупця та натискає на кнопку <strong><font color="red">Купити місце</font>/<font color="grey">Забронювати місце</font></strong>.</p>
+        <p>Місця позначені <strong><font color="#ff0055" style="letter-spacing: 1px;">РОЖЕВИМ</font></strong> кольором - продані місця. 
+        Після вибору проданого місця, воно змінює колір на <strong><font color="#750027" style="letter-spacing: 1px;">ТЕМНО-РОЖЕВИЙ</font></strong>.</p>
+        <p>Після вибору будь-якого місця (окрім <strong><font color="#ff0055">ПРОДАНОГО</font></strong>) з'являється вікно ЗАМОВЛЕННЯ із списком вибраних білетів та загальною вартістю за обрані білети. 
+        Коли покупець вибрав білети які хоче купити/забронювати, касир вводить електронну пошту покупця та натискає на кнопку <strong><font color="#ff0055">КУПИТИ МІСЦЕ</font>/<font color="grey">ЗАБРОНЮВАТИ МІСЦЕ</font></strong>.</p>
         <p>Після повторного обрання будь-якого місця в вікні Замовлення, це місце видаляється зі списку</p>
-        <p>Коли клієнт <strong><font color="grey">забронював місце</font></strong> - йому на електронну пошту прийде лист з інформацією про <strong><font color="grey">заброньоване місце</font></strong>. Касир за даним електронним листом обирає <strong><font color="grey">заброньовані місця</strong></font> та позначає їх як<strong><font color="red"> продані</font></strong>.</p>
-        <p>Якщо термін дії <strong><font color="grey">броні</font></strong> завершився і клієнт не встиг придбати білети - лист з заброньованими місцями стає не дійсним.</p>
-        <p>Якщо клієнт <strong><font color="red">купив місце</font></strong> - йому на електронну пошту прийде лист з білетами, які він придбав.</p>
-        <p>Після закінчення сеансу касир повинен вибрати звільнити всі місця за допомогою кнопки <strong><font color="blue">Звільнити залу</font></strong>.</p>
-        <p>Якщо покупець відмовився від білету - касир може повернути білет за допомогою кнопки <strong><font color="green">Повернути білет</font></strong>.</p>
+        <p>Коли клієнт <strong><font color="grey">ЗАБРОНЮВАВ</font></strong> місце - йому на електронну пошту прийде лист з інформацією про <strong>заброньоване місце</strong>. Касир за даним електронним листом обирає <strong>заброньовані місця</font> та позначає їх як <strong><font color="#ff0055">ПРОДАНІ</font></strong>.</p>
+        <p>Якщо термін дії <strong>броні</strong> завершився і клієнт не встиг придбати білети - лист з заброньованими місцями стає не дійсним.</p>
+        <p>Якщо клієнт <strong>купив місце</strong> - йому на електронну пошту прийде лист з білетами, які він придбав.</p>
+        <p>Після закінчення сеансу касир повинен вибрати звільнити всі місця за допомогою кнопки <strong><font color="blue">ЗВІЛЬНИТИ ЗАЛУ</font></strong>.</p>
+        <p>Якщо покупець відмовився від білету - касир може повернути білет за допомогою кнопки <strong><font color="#f07000">ПОВЕРНУТИ БІЛЕТ</font></strong>.</p>
         """
 
         self.text_widget.setHtml(text)
@@ -90,7 +90,7 @@ class HelpWindow(QtWidgets.QWidget):
                 border: none;
             }
             QScrollBar::handle:vertical {
-                background-color: rgb(255, 0, 0);
+                background-color: #ff0055;
                 border: none;
             }
             QScrollBar::add-page:vertical {  
@@ -190,7 +190,14 @@ class SeatInfoDialog(QtWidgets.QWidget):
         email_label.setStyleSheet("color: black; font-size: 22px;")
         self.email_input = QtWidgets.QLineEdit()
         self.email_input.setStyleSheet(
-            "background-color: white; border: 1px solid gray; color: black; font-size: 22px;"
+            """
+            background-color: white; 
+            border: 1px solid gray; 
+            color: black; 
+            font-size: 20px;
+            border-radius: 5px;
+            padding: 5px 10px;
+            """
         )
         self.email_input.setPlaceholderText("Введіть електронну пошту")
 
@@ -232,7 +239,7 @@ class SeatInfoDialog(QtWidgets.QWidget):
                 border: none;
             }
             QScrollBar::handle:vertical {
-                background-color: rgb(255, 0, 0);
+                background-color: #ff0055;
                 border: none;
             }
             QScrollBar::add-page:vertical {  
@@ -317,7 +324,8 @@ class HallWindow(QtWidgets.QWidget):
 
         layout = QtWidgets.QVBoxLayout(self)
         layout.setSpacing(10)
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setStyleSheet("background-color: #292929; color: white;")
+
         top_layout = QtWidgets.QHBoxLayout()
         layout.addLayout(top_layout)
 
@@ -333,13 +341,11 @@ class HallWindow(QtWidgets.QWidget):
         help_button.setStyleSheet("background-color: transparent; border: none;")
         help_button.clicked.connect(self.show_help_window)
 
-        ########################################Змінити#############################################
         top_info = QtWidgets.QWidget()
         top_info_layout = QtWidgets.QHBoxLayout(top_info)
 
         self.text_container1 = QtWidgets.QVBoxLayout()
         self.text_label1 = QtWidgets.QLabel()
-        self.text_label1.setStyleSheet("font-size: 16px; font-weight: 600;")
         self.text_label1.setFixedWidth(350)
         self.text_container1.addWidget(self.text_label1)
         self.info_details()
@@ -347,7 +353,7 @@ class HallWindow(QtWidgets.QWidget):
         text_container2 = QtWidgets.QVBoxLayout()
         text_label2 = QtWidgets.QLabel()
         text_label2.setText(
-            "<font color='blue'>Вільні місця</font><br><font color='red'>Куплені місця</font></br><br><font color='grey'>Заброньовані місця</font></br>"
+            "<font color='blue'>Вільні місця</font><br><font color='#ff0055'>Куплені місця</font></br><br><font color='grey'>Заброньовані місця</font></br>"
         )
         text_label2.setStyleSheet("font-size: 16px; font-weight: 600;")
         text_container2.addWidget(text_label2)
@@ -375,7 +381,7 @@ class HallWindow(QtWidgets.QWidget):
         screen_container.setPixmap(s_pixmap.pixmap(QtCore.QSize(1180, 960)))
 
         screen_container.setAlignment(QtCore.Qt.AlignCenter)
-        ##############################################################################################
+
         sub_container = QtWidgets.QHBoxLayout()
 
         self.button_container = QtWidgets.QWidget()
@@ -420,33 +426,33 @@ class HallWindow(QtWidgets.QWidget):
         buy_button.setFixedSize(230, 50)
         buy_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: red; 
-                            color: white; 
-                            font-size: 22px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: darkred; 
-                            color: lightgray; 
-                        }
-                        """
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 22px; 
+                border-radius: 15px;
+            }
+            QPushButton:pressed { 
+                background-color: #750027; 
+                color: lightgray; 
+            }
+            """
         )
 
         reservation_button = QtWidgets.QPushButton("Забронювати місце")
         reservation_button.setFixedSize(230, 50)
         reservation_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: grey; 
-                            color: white; 
-                            font-size: 22px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: darkgrey; 
-                            color: lightgray; 
-                        }
+            QPushButton {
+                background-color: grey; 
+                color: white; 
+                font-size: 22px; 
+                border-radius: 15px;
+            }
+            QPushButton:pressed { 
+                background-color: darkgrey; 
+                color: lightgray; 
+            }
                         """
         )
 
@@ -454,34 +460,33 @@ class HallWindow(QtWidgets.QWidget):
         free_button.setFixedSize(230, 50)
         free_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: green; 
-                            color: white; 
-                            font-size: 22px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: green; 
-                            color: lightgray; 
-                        }
-                        """
+            QPushButton {
+                background-color: #f07000; 
+                color: white; 
+                font-size: 22px; 
+                border-radius: 15px;
+            }
+            QPushButton:pressed {
+                color: lightgray; 
+            }
+            """
         )
 
         free_all_button = QtWidgets.QPushButton("Звільнити залу")
         free_all_button.setFixedSize(230, 50)
         free_all_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: blue; 
-                            color: white; 
-                            font-size: 22px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: darkblue; 
-                            color: lightgray; 
-                        }
-                        """
+            QPushButton {
+                background-color: blue; 
+                color: white; 
+                font-size: 22px; 
+                border-radius: 15px;
+            }
+            QPushButton:pressed {
+                background-color: darkblue; 
+                color: lightgray; 
+            }
+            """
         )
 
         button_layout_bottom.addWidget(free_button)
@@ -493,6 +498,10 @@ class HallWindow(QtWidgets.QWidget):
         reservation_button.clicked.connect(self.reservation_seats)
         free_button.clicked.connect(self.free_seats)
         free_all_button.clicked.connect(self.free_all_seats)
+
+        self.text_label1.setStyleSheet(
+            "color: white; font-size: 16px; font-weight: 600;"
+        )
 
         self.total_price_label = QtWidgets.QLabel()
         self.update_total_price_label()
@@ -538,13 +547,13 @@ class HallWindow(QtWidgets.QWidget):
             num_empty_right = extra_seats - num_empty_left
 
             row_label = QtWidgets.QLabel("Ряд " + str(r))
-            row_label.setStyleSheet("color: black; font-size: 22px;")
+            row_label.setStyleSheet("color: white; font-size: 22px;")
             row_label.setFixedSize(70, 55)
             self.row_labels_layout.addWidget(row_label)
             row_layout = QtWidgets.QHBoxLayout()
 
             row_label2 = QtWidgets.QLabel("  Ряд " + str(r))
-            row_label2.setStyleSheet("color: black; font-size: 22px;")
+            row_label2.setStyleSheet("color: white; font-size: 22px;")
             row_label2.setFixedSize(70, 55)
             self.row_labels2_layout.addWidget(row_label2)
 
@@ -571,7 +580,6 @@ class HallWindow(QtWidgets.QWidget):
 
             self.button_layout.addLayout(row_layout)
 
-    ############################Додати##################################
     def info_details(self):
         connection = self.database.connection
         cursor = connection.cursor()
@@ -589,20 +597,16 @@ class HallWindow(QtWidgets.QWidget):
 
         details_text = ""
         for detail in cinema_details:
-            details_text += (
-                f"Назва: «{detail[0]}»\nЗала: {detail[1]}\nЧас: {detail[2]}-{detail[3]}"
-            )
+            details_text += f"«{detail[0]}»\n {detail[1]}\n {detail[2]}-{detail[3]}"
 
         self.text_label1.setText(details_text)
-
-    ###########################################################################
 
     def get_button_style(self, status, selected=False):
         if status == 1:
             if selected:
                 return """
                     QPushButton { 
-                        border-radius: 10px;
+                        border-radius: 15px;
                         color: lightgray;
                         font-size: 18px;
                         background-color: darkblue;
@@ -615,7 +619,7 @@ class HallWindow(QtWidgets.QWidget):
             else:
                 return """
                     QPushButton { 
-                        border-radius: 10px;
+                        border-radius: 15px;
                         color: white;
                         font-size: 18px;
                         background-color: blue;
@@ -630,12 +634,12 @@ class HallWindow(QtWidgets.QWidget):
                 return """
                     QPushButton {
                         color: lightgray;
-                        border-radius: 10px;
+                        border-radius: 15px;
                         font-size: 18px;
-                        background-color: darkred;
+                        background-color: #750027;
                     }
                     QPushButton:pressed { 
-                        background-color: darkred; 
+                        background-color: #750027; 
                         color: lightgray; 
                     }
                 """
@@ -644,11 +648,11 @@ class HallWindow(QtWidgets.QWidget):
                     QPushButton {
                         color: white;
                         font-size: 18px;
-                        border-radius: 10px;
-                        background-color: red;
+                        border-radius: 15px;
+                        background-color: #ff0055;
                     }
                     QPushButton:pressed { 
-                        background-color: darkred; 
+                        background-color: #750027; 
                         color: lightgray; 
                     }
                 """
@@ -656,7 +660,7 @@ class HallWindow(QtWidgets.QWidget):
             if selected:
                 return """
                     QPushButton {
-                        border-radius: 10px;
+                        border-radius: 15px;
                         font-size: 18px;
                         color: lightgray;
                         background-color: #484848;
@@ -669,7 +673,7 @@ class HallWindow(QtWidgets.QWidget):
             else:
                 return """
                     QPushButton {
-                        border-radius: 10px;
+                        border-radius: 15px;
                         font-size: 18px;
                         color: white;
                         background-color: grey;
@@ -683,7 +687,7 @@ class HallWindow(QtWidgets.QWidget):
             if selected:
                 return """
                     QPushButton { 
-                        border-radius: 10px;
+                        border-radius: 15px;
                         color: lightgray;
                         font-size: 18px;
                         background-color: darkblue;
@@ -696,7 +700,7 @@ class HallWindow(QtWidgets.QWidget):
             else:
                 return """
                     QPushButton { 
-                        border-radius: 10px;
+                        border-radius: 15px;
                         color: white;
                         font-size: 18px;
                         background-color: blue;
@@ -734,7 +738,7 @@ class HallWindow(QtWidgets.QWidget):
 
     def update_total_price_label(self):
         currency = self.selected_seats_info[0][7] if self.selected_seats_info else ""
-        total_price_text = f"Не має вибраних місць!"
+        total_price_text = f"Немає вибраних місць!"
         self.total_price_label.setText(total_price_text)
         self.total_price_label.setStyleSheet("color: black; font-size: 22px;")
 
@@ -777,13 +781,6 @@ class HallWindow(QtWidgets.QWidget):
             seat_info = cursor.fetchone()
 
         if seat_info:
-            # dialog_text = f"Зала: {seat_info[0]}\n" \
-            #             f"Ряд: {seat_info[1]} Місце: {seat_info[2]}\n" \
-            #             f"Фільм: {seat_info[3]}\n" \
-            #             f"Дата початку сеансу: {seat_info[4]}\n" \
-            #             f"Початок сеансу: {seat_info[8]}\n" \
-            #             f"Кінець сеансу: {seat_info[5]}\n" \
-            #             f"Ціна: {seat_info[6]} {seat_info[7]}"
             seat_info_tuple = (num_seat, id_rows, status)
             button = self.buttons_dict.get((num_seat, id_rows))
 
@@ -808,7 +805,7 @@ class HallWindow(QtWidgets.QWidget):
                     QMessageBox.warning(
                         self,
                         "Попередження",
-                        "За один раз можно выбрать не более 10 квитков.",
+                        "За один раз можна вибрати не більше 10 квитків",
                     )
 
             if status != 3:
@@ -910,7 +907,6 @@ class HallWindow(QtWidgets.QWidget):
                 box_size=4,
                 border=0,
             )
-            ################################ЗМІНИ######################
             qr.add_data(
                 "\n".join(
                     [
@@ -924,7 +920,6 @@ class HallWindow(QtWidgets.QWidget):
                     ]
                 )
             )
-            ############################################################
             qr.make(fit=True)
 
             qr_image = qr.make_image(fill_color="black", back_color="white")
@@ -937,7 +932,7 @@ class HallWindow(QtWidgets.QWidget):
 
         return ticket_images
 
-    def sendre_reservation_tickets_email(self):
+    def send_reservation_tickets_email(self):
         to_email = self.seat_info_dialog.email_input.text()
         ticket_images = self.create_reservation_ticket_image()
         self.send_email_r(to_email, "", ticket_images)
@@ -1093,7 +1088,7 @@ class HallWindow(QtWidgets.QWidget):
         if not self.selected_seats:
             QMessageBox.information(self, "Інформація", "Немає вибраних місць.")
             return
-        self.sendre_reservation_tickets_email()
+        self.send_reservation_tickets_email()
 
         with self.database.connection.cursor() as cursor:
             for seat_info in self.selected_seats:
