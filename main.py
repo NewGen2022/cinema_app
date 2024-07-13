@@ -24,7 +24,7 @@ def run_application():
         else:
             handle_choice("касир", app, database, login_name)
 
-        sys.exit(app.exec_())
+        sys.exit(app.exec())
 
 
 def handle_choice(choice, app, database, login_name):
