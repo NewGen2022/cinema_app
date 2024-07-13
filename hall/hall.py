@@ -18,7 +18,15 @@ class HelpWindow(QtWidgets.QWidget):
     def __init__(self, parent=None):
         super(HelpWindow, self).__init__(parent)
         self.setFixedSize(800, 600)
-        self.setStyleSheet("background-color: rgba(204, 204, 204, 250);")
+        self.setStyleSheet(
+            """
+                background-color: rgba(204, 204, 204, 250);  
+                QMessageBox {
+                    background-color: white;
+                    color: black;
+                }
+            """
+        )
         self.draggable = False
         self.drag_pos = QtCore.QPoint()
 
@@ -39,7 +47,7 @@ class HelpWindow(QtWidgets.QWidget):
 
         title_label = QtWidgets.QLabel("Довідка")
         title_label.setStyleSheet("font-weight: 500; color: black;")
-        title_label.setFont(QtGui.QFont("Arial", 22))
+        title_label.setFont(QtGui.QFont("Franklin Gothic", 22))
 
         close_button = QtWidgets.QPushButton()
         close_button.setIcon(QtGui.QIcon(QtGui.QPixmap("./assets/close.png")))
@@ -77,7 +85,7 @@ class HelpWindow(QtWidgets.QWidget):
         self.text_widget.setStyleSheet(
             "background-color: rgb(255, 255, 255); border-top: none; color: black;"
         )
-        self.text_widget.setFont(QtGui.QFont("Arial", 18))
+        self.text_widget.setFont(QtGui.QFont("Franklin Gothic", 18))
         self.text_widget.setWordWrapMode(QtGui.QTextOption.WrapAtWordBoundaryOrAnywhere)
 
         self.text_widget.verticalScrollBar().setStyleSheet(
@@ -183,7 +191,7 @@ class SeatInfoDialog(QtWidgets.QWidget):
         title_layout = QtWidgets.QHBoxLayout(title_container)
         title_label = QtWidgets.QLabel("ЗАМОВЛЕННЯ")
         title_label.setStyleSheet("color: black; font-weight: 500;")
-        title_label.setFont(QtGui.QFont("Arial", 22))
+        title_label.setFont(QtGui.QFont("Franklin Gothic", 22))
         title_layout.addWidget(title_label)
 
         email_label = QtWidgets.QLabel("Електронна пошта:")
@@ -718,7 +726,7 @@ class HallWindow(QtWidgets.QWidget):
             ticket_image = ticket_image.scaled(333, 100)
             painter = QPainter(ticket_image)
             painter.setPen(QColor("black"))
-            painter.setFont(QFont("Arial", 14))
+            painter.setFont(QFont("Franklin Gothic", 14))
 
             info_text = f"Ряд: {seat_info[1]}, Місце: {seat_info[2]}, Ціна: {seat_info[6]} {seat_info[7]}"
 
@@ -1137,9 +1145,9 @@ class HallWindow(QtWidgets.QWidget):
                 for seat_info in self.selected_seats:
                     num_seat, id_rows, status = seat_info
                     sql = """
-                            UPDATE `db_findtick`.`Seats`
+                            UPDATE db_findtick.Seats
                             SET status = 4
-                            WHERE (`num_seats` = %s) AND (`id_Hall` = %s) AND (`nomer_S` = %s) AND (`id_Rows` = %s);
+                            WHERE (num_seats = %s) AND (id_Hall = %s) AND (nomer_S = %s) AND (id_Rows = %s);
                             """
                     cursor.execute(sql, (num_seat, self.id_Hall, self.nomer_S, id_rows))
                     self.database.connection.commit()
