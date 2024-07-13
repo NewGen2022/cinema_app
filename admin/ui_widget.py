@@ -21,9 +21,10 @@ class Ui_admin_widget(object):
     def setupUi(self, admin_widget):
         if not admin_widget.objectName():
             admin_widget.setObjectName("admin_widget")
-        admin_widget.resize(1920, 1080)
+        admin_widget.resize(1500, 900)
+        self.setStyleSheet("background-color: #292929;")
         font = QFont()
-        font.setFamilies(["Arial, Helvetica, sans - serif"])
+        font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
         font.setPointSize(16)
         font.setBold(True)
         admin_widget.setFont(font)
@@ -64,17 +65,20 @@ class Ui_admin_widget(object):
         self.add_object_button.setMinimumSize(QSize(250, 70))
         self.add_object_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: green; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: darkgreen; 
-                            color: lightgray; 
-                        }
-                        """
+            QPushButton {
+                background-color: green; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                margin: 0 20px;
+                font-weight: bold;
+                font-family: Franklin Gothic Heavy, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: darkgreen; 
+                color: white; 
+            }
+            """
         )
 
         self.verticalLayout_10.insertWidget(0, self.add_object_button)
@@ -85,40 +89,70 @@ class Ui_admin_widget(object):
         self.go_to_zvit_button.setFont(font)
         self.go_to_zvit_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: #5e5e5e; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey
-                            color: lightgray; 
-                        }
-                        """
+            QPushButton {
+                background-color: #5e5e5e; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                margin: 0 20px;
+                font-family: Franklin Gothic Heavy, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: #363636;
+                color: white; 
+            }
+            """
         )
 
         self.verticalLayout_10.insertWidget(1, self.go_to_zvit_button)
 
+        self.horizontalLayout_10 = QHBoxLayout()
+        self.horizontalLayout_10.setContentsMargins(20, 0, 20, 0)
+
         self.about = QPushButton(self.layoutWidget, text="Про програму")
         self.about.setObjectName("about")
-        self.about.setMinimumSize(QSize(0, 70))
+        self.about.setMinimumSize(QSize(100, 70))
         self.about.setFont(font)
         self.about.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: grey; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey
-                            color: lightgray; 
-                        }
-                        """
+            QPushButton {
+                background-color: grey; 
+                color: white; 
+                font-size: 18px; 
+                border-radius: 10px;
+                padding: 0 10px;
+                font-family: Franklin Gothic, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: black;
+            }
+            """
         )
-        self.verticalLayout_10.insertWidget(2, self.about)
+
+        self.horizontalLayout_10.insertWidget(0, self.about)
+        self.help = QPushButton(self.layoutWidget, text="Help")
+        self.help.setObjectName("help")
+        self.help.setMinimumSize(QSize(100, 70))
+        self.help.setFont(font)
+        self.help.setStyleSheet(
+            """
+            QPushButton {
+                background-color: grey; 
+                color: white; 
+                font-size: 18px; 
+                border-radius: 10px;
+                font-family: Franklin Gothic, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: white;
+                color: black; 
+            }
+            """
+        )
+
+        self.horizontalLayout_10.insertWidget(1, self.help)
+        self.verticalLayout_10.insertLayout(2, self.horizontalLayout_10)
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_9)
 
@@ -129,17 +163,20 @@ class Ui_admin_widget(object):
         self.hall_button.setMinimumSize(QSize(0, 70))
         self.hall_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                font-weight: bold;
+                margin: 0 20px;
+                font-family: Franklin Gothic Heavy, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: #ffabc7;
+                color: white; 
+            }
+            """
         )
 
         self.film_button = QPushButton(self.layoutWidget)
@@ -147,35 +184,40 @@ class Ui_admin_widget(object):
         self.film_button.setMinimumSize(QSize(0, 70))
         self.film_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                margin: 0 20px;
+                font-weight: bold;
+                font-family: Franklin Gothic Heavy, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
 
         self.session_button = QPushButton(self.layoutWidget)
         self.session_button.setObjectName("session_button")
-        self.session_button.setMinimumSize(QSize(0, 70))
+        self.session_button.setMinimumSize(QSize(400, 70))
         self.session_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                margin: 0 20px;
+                font-family: Franklin Gothic Heavy, sans-serif;
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
 
         self.user_button = QPushButton(self.layoutWidget)
@@ -183,20 +225,21 @@ class Ui_admin_widget(object):
         self.user_button.setMinimumSize(QSize(0, 70))
         self.user_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                            font-weight: bold;
-                            font-family: Arial, Helvetica, sans-serif; 
-                            
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                margin: 0 20px;
+                font-weight: bold;
+                font-family: Franklin Gothic Heavy, sans-serif; 
+                
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
 
         self.verticalLayout_11.insertItem(0, self.verticalSpacer_7)
@@ -212,21 +255,48 @@ class Ui_admin_widget(object):
         self.verticalLayout_9.insertLayout(2, self.verticalLayout_10)
 
         self.tableWidget_label = QLabel("Таблиця сеансів", self.layoutWidget)
-        self.tableWidget_label.setFont(QFont("Arial", 20, QFont.Bold))  # Шрифт
+        self.tableWidget_label.setFont(QFont("Franklin Gothic Heavy", 20, QFont.Bold))
         self.tableWidget_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.tableWidget_label.setStyleSheet("color: white;")
 
         self.tableWidget = QTableWidget(self.layoutWidget)
         self.tableWidget.setMinimumSize(QSize(1000, 0))
         self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
         self.verticalLayout_7.insertWidget(0, self.tableWidget_label)
         self.verticalLayout_7.insertWidget(1, self.tableWidget)
+        self.tableWidget.setStyleSheet(
+            """
+            QTableWidget {
+                background-color: white;
+                font-size: 18px;
+            }
+            QScrollBar:vertical {
+                background: #ff0055;
+            }
+            QScrollBar::handle:vertical {
+                background: #ff0055;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                background: #ff0055;
+            }
+            QScrollBar:horizontal {
+                background: #ff0055;
+            }
+            QScrollBar::handle:horizontal {
+                background: #ff0055;
+            }
+            QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+                background: #ff0055;
+            }
+            """
+        )
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_7)
         self.retranslateUi(admin_widget)
 
         QMetaObject.connectSlotsByName(admin_widget)
 
-    # setupUi
+        self.showMaximized()
 
     def retranslateUi(self, admin_widget):
         admin_widget.setWindowTitle(
@@ -237,13 +307,7 @@ class Ui_admin_widget(object):
                 "admin_widget", "\u0414\u043e\u0434\u0430\u0442\u0438", None
             )
         )
-        self.go_to_zvit_button.setText(
-            QCoreApplication.translate(
-                "admin_widget",
-                "\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u0434\u043e \u0437\u0432\u0456\u0442\u043d\u043e\u0441\u0442\u0435\u0439",
-                None,
-            )
-        )
+        self.go_to_zvit_button.setText("Звітності")
         self.hall_button.setText(
             QCoreApplication.translate("admin_widget", "\u0417\u0430\u043b\u0438", None)
         )

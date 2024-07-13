@@ -25,6 +25,7 @@ import re
 import datetime
 from admin.ui_widget import Ui_admin_widget
 from admin.aboutWindow import AboutWindow
+from admin.helpWindow import HelpWindow
 
 
 class Widget(QWidget, Ui_admin_widget):
@@ -46,6 +47,7 @@ class Widget(QWidget, Ui_admin_widget):
         self.add_object_button.clicked.connect(self.add_item)
         self.go_to_zvit_button.clicked.connect(self.zvit_window_show)
         self.about.clicked.connect(self.handle_about)
+        self.help.clicked.connect(self.handle_help)
         self.tableWidget.cellChanged.connect(self.change_value)
 
         self.tableWidget.setContextMenuPolicy(Qt.CustomContextMenu)
@@ -66,6 +68,13 @@ class Widget(QWidget, Ui_admin_widget):
         row = index.row()
         column = index.column()
         context_menu = QMenu(self)
+
+        context_menu.setStyleSheet(
+            """
+            background-color: white;
+            color: black;
+            """
+        )
 
         action_1 = context_menu.addAction("Редагувати")
         action_2 = context_menu.addAction("Видалити")
@@ -789,35 +798,35 @@ class Widget(QWidget, Ui_admin_widget):
 
     def change_color(self, button, button_1=None):
         new_style = """
-                        QPushButton {
-                            background-color: #bd8b02; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                            font-weight: bold;
-                            font-family: Arial, Helvetica, sans-serif; 
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+                    QPushButton {
+                        background-color: #bd0240; 
+                        color: white; 
+                        font-size: 30px; 
+                        border-radius: 10px;
+                        margin: 0 30px;
+                        font-family: Franklin Gothic Heavy, sans-serif; 
+                    }
+                    QPushButton:pressed { 
+                        background-color: white; 
+                        color: #ff0055; 
+                    }
+                    """
         button.setStyleSheet(new_style)
         if button_1 != None:
             old_style = """
-                            QPushButton {
-                                background-color: orange; 
-                                color: white; 
-                                font-size: 30px; 
-                                border-radius: 20px;
-                                font-weight: bold;
-                                font-family: Arial, Helvetica, sans-serif; 
-                            }
-                            QPushButton:pressed { 
-                                background-color: lightgrey; 
-                                color: orange; 
-                            }
-                            """
+                        QPushButton {
+                            background-color: #ff0055; 
+                            color: white; 
+                            font-size: 30px; 
+                            border-radius: 15px;
+                            margin: 0 20px;
+                            font-family: Franklin Gothic Heavy, sans-serif; 
+                        }
+                        QPushButton:pressed { 
+                            background-color: white; 
+                            color: #ff0055; 
+                        }
+                        """
             button_1.setStyleSheet(old_style)
         else:
             return 0
@@ -893,7 +902,7 @@ class Widget(QWidget, Ui_admin_widget):
 
             request = (
                 "INSERT INTO kino "
-                "(name_kino,id_age_restrictions,id_countries,genre_kino,graduation_year,duration_film,image_kino,s_description) "  # Додати image
+                "(name_kino,id_age_restrictions,id_countries,genre_kino,graduation_year,duration_film,image_kino,s_description) "
                 "VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
             )
             temp_cursor.execute(request, objects)
@@ -1173,6 +1182,9 @@ class Widget(QWidget, Ui_admin_widget):
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No,
         )
+
+        QMessageBox.setStyleSheet("QLabel { color: white; }")
+
         if reply == QMessageBox.No:
             return 0
         else:
@@ -1448,11 +1460,17 @@ class Widget(QWidget, Ui_admin_widget):
         ):
             dialog = QDialog(self)
             font = QFont()
-            font.setFamilies(["Arial, Helvetica, sans - serif"])
+            font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
             font.setPointSize(16)
             dialog.setFont(font)
             dialog.setWindowTitle(f"Зміна значення для фільму {label_1}")
             dialog.setGeometry(700, 350, 250, 150)
+
+            dialog.setStyleSheet(
+                """
+                background-color: white;
+                """
+            )
 
             horizontal_layout = QHBoxLayout()
             vertical_layout = QVBoxLayout()
@@ -1721,9 +1739,15 @@ class Widget(QWidget, Ui_admin_widget):
                 dialog.setWindowTitle("Зміна рядів")
                 dialog.setGeometry(700, 350, 250, 150)
                 font = QFont()
-                font.setFamilies(["Arial, Helvetica, sans - serif"])
+                font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
                 font.setPointSize(16)
                 dialog.setFont(font)
+
+                dialog.setStyleSheet(
+                    """
+                    background-color: white;
+                    """
+                )
 
                 vertical_layout_1 = QVBoxLayout()
 
@@ -2007,9 +2031,15 @@ class Widget(QWidget, Ui_admin_widget):
             dialog.setWindowTitle("Змінна параметру сеансу")
             dialog.setGeometry(700, 350, 250, 150)
             font = QFont()
-            font.setFamilies(["Arial, Helvetica, sans - serif"])
+            font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
             font.setPointSize(16)
             dialog.setFont(font)
+
+            dialog.setStyleSheet(
+                """
+                background-color: white;
+                """
+            )
 
             horizontal_layout = QHBoxLayout()
             vertical_layout = QVBoxLayout()
@@ -2177,9 +2207,15 @@ class Widget(QWidget, Ui_admin_widget):
             dialog.setWindowTitle(f"Зміна прав користувача {user}")
             dialog.setGeometry(700, 350, 250, 150)
             font = QFont()
-            font.setFamilies(["Arial, Helvetica, sans - serif"])
+            font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
             font.setPointSize(16)
             dialog.setFont(font)
+
+            dialog.setStyleSheet(
+                """
+                background-color: white;
+                """
+            )
 
             horizontal_layout = QHBoxLayout()
             vertical_layout = QVBoxLayout()
@@ -2385,7 +2421,7 @@ class Widget(QWidget, Ui_admin_widget):
     def show_dialog_message(self, type, text):
         popup = QMessageBox()
         font = QFont()
-        font.setFamilies(["Arial, Helvetica, sans - serif"])
+        font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
         font.setPointSize(16)
         popup.setFont(font)
         popup.setWindowTitle("Повідомлення")
@@ -2517,7 +2553,7 @@ class Widget(QWidget, Ui_admin_widget):
                 self.zvit_window.film_zvit_button, self.zvit_window.action_zvit_button
             )
         self.zvit_pointer = "kino"
-        self.zvit_window.tableWidget_label.setText("Статистика по фільмам")
+        self.zvit_window.tableWidget_label.setText("Звіти по фільмам")
 
         temp_cursor = self.database.connection.cursor()
         request = """
@@ -2563,7 +2599,7 @@ class Widget(QWidget, Ui_admin_widget):
                 self.zvit_window.hall_zvit_button, self.zvit_window.action_zvit_button
             )
         self.zvit_pointer = "hall"
-        self.zvit_window.tableWidget_label.setText("Статистика по залам")
+        self.zvit_window.tableWidget_label.setText("Звіти по залам")
 
         temp_cursor = self.database.connection.cursor()
         request = """
@@ -2633,6 +2669,10 @@ class Widget(QWidget, Ui_admin_widget):
         aboutWindow = AboutWindow()
         aboutWindow.exec_()
 
+    def handle_help(self):
+        help_window = HelpWindow(self)
+        help_window.exec_()
+
 
 class CustomDialog(QDialog):
     def __init__(self, parent=None):
@@ -2643,9 +2683,15 @@ class CustomDialog(QDialog):
         self.verticalLayout_1 = QVBoxLayout()
         self.setLayout(self.verticalLayout_1)
         font = QFont()
-        font.setFamilies(["Arial, Helvetica, sans - serif"])
+        font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
         font.setPointSize(16)
         self.setFont(font)
+
+        self.setStyleSheet(
+            """
+            background-color: white;
+        """
+        )
 
     def clear_area(self):
         self.clear_layout(self.verticalLayout_1)
@@ -2685,8 +2731,8 @@ class Zvit_Window(QDialog):
             20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding
         )
         font = QFont()
-        font.setFamilies(["Arial, Helvetica, sans - serif"])
-        font.setPointSize(16)
+        font.setFamilies(["Franklin Gothic, sans - serif"])
+        font.setPointSize(18)
         self.setFont(font)
 
         self.verticalLayout_1 = QVBoxLayout()
@@ -2694,99 +2740,128 @@ class Zvit_Window(QDialog):
         self.horizontalLayout.insertLayout(0, self.verticalLayout_1)
         self.horizontalLayout.insertLayout(1, self.verticalLayout_2)
 
-        self.tableWidget_label = QLabel("Статистика по сеансам", self)
-        self.tableWidget_label.setFont(QFont("Arial", 16, QFont.Bold))
+        self.tableWidget_label = QLabel("Звіти по сеансам", self)
+        self.tableWidget_label.setFont(QFont("Franklin Gothic", 18, QFont.Bold))
         self.tableWidget_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.tableWidget_label.setStyleSheet("color: white;")
         self.tableWidget = QTableWidget(self)
 
         self.tableWidget.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.tableWidget.setStyleSheet(
+            """
+            QTableWidget {
+                background-color: white;
+                font-size: 18px;
+            }
+            QScrollBar:vertical {
+                background: #ff0055;
+            }
+            QScrollBar::handle:vertical {
+                background: #ff0055;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                background: #ff0055;
+            }
+            QScrollBar:horizontal {
+                background: #ff0055;
+            }
+            QScrollBar::handle:horizontal {
+                background: #ff0055;
+            }
+            QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+                background: #ff0055;
+            }
+            """
+        )
 
         self.tableWidget.setFixedSize(QSize(1100, 700))
         self.verticalLayout_2.insertWidget(0, self.tableWidget_label)
         self.verticalLayout_2.insertWidget(1, self.tableWidget)
 
         self.verticalLayout_1.insertItem(0, self.verticalSpacer_2)
-        self.film_zvit_button = QPushButton("Статистика по фільму", self)
+        self.film_zvit_button = QPushButton("Звіти по фільмам", self)
         self.film_zvit_button.setFixedSize(QSize(340, 60))
         self.film_zvit_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                            font-weight: bold;
-                            font-family: Arial, Helvetica, sans-serif; 
-                            
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                padding: 5px 0;
+                margin: 0 20px;
+                font-family: Franklin Gothic Heavy, sans-serif; 
+                
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
 
-        self.hall_zvit_button = QPushButton("Статистика по залу", self)
+        self.hall_zvit_button = QPushButton("Звіти по залам", self)
         self.hall_zvit_button.setFixedSize(QSize(340, 60))
         self.hall_zvit_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                            font-weight: bold;
-                            font-family: Arial, Helvetica, sans-serif; 
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                padding: 5px 0;
+                margin: 0 20px;
+                font-family: Franklin Gothic Heavy, sans-serif; 
 
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
 
-        self.session_zvit_button = QPushButton("Статистика за сеанс", self)
+        self.session_zvit_button = QPushButton("Звіти по сеансам", self)
         self.session_zvit_button.setFixedSize(QSize(340, 60))
         self.session_zvit_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                            font-weight: bold;
-                            font-family: Arial, Helvetica, sans-serif; 
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                font-family: Franklin Gothic Heavy, sans-serif; 
 
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
         self.verticalLayout_1.insertWidget(1, self.session_zvit_button)
         self.verticalLayout_1.insertWidget(2, self.film_zvit_button)
         self.verticalLayout_1.insertWidget(3, self.hall_zvit_button)
 
-        self.action_zvit_button = QPushButton("Дії користувачів", self)
+        self.action_zvit_button = QPushButton("Логи", self)
         self.action_zvit_button.setFixedSize(QSize(340, 60))
         self.action_zvit_button.setStyleSheet(
             """
-                        QPushButton {
-                            background-color: orange; 
-                            color: white; 
-                            font-size: 30px; 
-                            border-radius: 20px;
-                            font-weight: bold;
-                            font-family: Arial, Helvetica, sans-serif; 
+            QPushButton {
+                background-color: #ff0055; 
+                color: white; 
+                font-size: 30px; 
+                border-radius: 10px;
+                padding: 5px 0;
+                margin: 0 20px;
+                font-family: Franklin Gothic Heavy, sans-serif; 
 
-                        }
-                        QPushButton:pressed { 
-                            background-color: lightgrey; 
-                            color: orange; 
-                        }
-                        """
+            }
+            QPushButton:pressed { 
+                background-color: white; 
+                color: #ff0055; 
+            }
+            """
         )
         self.verticalLayout_1.insertItem(4, self.verticalSpacer_4)
         self.verticalLayout_1.insertWidget(5, self.action_zvit_button)
