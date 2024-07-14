@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt, QSize, QDateTime
-from PySide6.QtGui import QImage, QPixmap, QColor, QFont
+from PySide6.QtGui import QImage, QPixmap, QColor, QFont, QIcon
 from PySide6.QtWidgets import (
     QWidget,
     QLineEdit,
@@ -39,6 +39,9 @@ class Widget(QWidget, Ui_admin_widget):
         self.database = db
         self.zvit_window = Zvit_Window(self)
         self.add_dialog = CustomDialog(self)
+
+        icon = QIcon("./assets/icon.ico")
+        self.setWindowIcon(icon)
 
         self.film_button.clicked.connect(self.show_table_film)
         self.hall_button.clicked.connect(self.show_table_halls)
@@ -532,7 +535,9 @@ class Widget(QWidget, Ui_admin_widget):
         ]
         self.tableWidget.setRowCount(len(data))
         self.tableWidget.setColumnCount(len(columns))
+
         self.tableWidget.setHorizontalHeaderLabels(columns)
+
         for row_idx, row in enumerate(data):
             for col_idx, value in enumerate(row):
                 if col_idx == 5:
@@ -1134,13 +1139,33 @@ class Widget(QWidget, Ui_admin_widget):
     def delete_kino(self, row, column):
         temp_cursor = self.database.connection.cursor()
 
-        reply = QMessageBox.question(
-            self,
-            "Повідомлення",
-            f"Ви впевнені, що хочете видалити фільм {self.tableWidget.item(row,1).text()}?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+        msg_box = QMessageBox(self)
+        msg_box.setText(
+            f"Ви впевнені, що хочете видалити фільм {self.tableWidget.item(row,1).text()}?"
         )
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+
+        msg_box.setStyleSheet(
+            """
+                  QMessageBox {
+                      background-color: white;
+                      font-size: 16px;
+                  }
+                  QLabel {
+                    background-color: white;
+                    color: black;
+                  }
+                  QPushButton {
+                      background-color: white;
+                      border: 1px solid black;
+                      padding: 5px 20px;
+                      color: black;
+                  }
+              """
+        )
+
+        reply = msg_box.exec()
         id_kino = self.tableWidget.item(row, 0).text()
         if reply == QMessageBox.No:
             return 0
@@ -1175,15 +1200,33 @@ class Widget(QWidget, Ui_admin_widget):
     def delete_hall(self, row, column):
         temp_cursor = self.database.connection.cursor()
 
-        reply = QMessageBox.question(
-            self,
-            "Повідомлення",
-            f"Ви впевнені, що хочете видалити {self.tableWidget.item(row,1).text()}?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+        msg_box = QMessageBox(self)
+        msg_box.setText(
+            f"Ви впевнені, що хочете видалити зал {self.tableWidget.item(row,1).text()}?"
+        )
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+
+        msg_box.setStyleSheet(
+            """
+                  QMessageBox {
+                      background-color: white;
+                      font-size: 16px;
+                  }
+                  QLabel {
+                    background-color: white;
+                    color: black;
+                  }
+                  QPushButton {
+                      background-color: white;
+                      border: 1px solid black;
+                      padding: 5px 20px;
+                      color: black;
+                  }
+              """
         )
 
-        QMessageBox.setStyleSheet("QLabel { color: white; }")
+        reply = msg_box.exec()
 
         if reply == QMessageBox.No:
             return 0
@@ -1231,13 +1274,34 @@ class Widget(QWidget, Ui_admin_widget):
     def delete_session(self, row, column):
         temp_cursor = self.database.connection.cursor()
 
-        reply = QMessageBox.question(
-            self,
-            "Повідомлення",
-            f"Ви впевнені, що хочете видалити сеанс з {self.tableWidget.item(row,2).text()}?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+        msg_box = QMessageBox(self)
+        msg_box.setText(
+            f"Ви впевнені, що хочете видалити сеанс з зали {self.tableWidget.item(row,2).text()}?"
         )
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+
+        msg_box.setStyleSheet(
+            """
+                  QMessageBox {
+                      background-color: white;
+                      font-size: 16px;
+                  }
+                  QLabel {
+                    background-color: white;
+                    color: black;
+                  }
+                  QPushButton {
+                      background-color: white;
+                      border: 1px solid black;
+                      padding: 5px 20px;
+                      color: black;
+                  }
+              """
+        )
+
+        reply = msg_box.exec()
+
         if reply == QMessageBox.No:
             return 0
         else:
@@ -1284,13 +1348,34 @@ class Widget(QWidget, Ui_admin_widget):
     def delete_user(self, row, column):
         temp_cursor = self.database.connection.cursor()
 
-        reply = QMessageBox.question(
-            self,
-            "Повідомлення",
-            f"Ви впевнені, що хочете видалити користувача {self.tableWidget.item(row,0).text()}?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+        msg_box = QMessageBox(self)
+        msg_box.setText(
+            f"Ви впевнені, що хочете видалити користувача {self.tableWidget.item(row,0).text()}?"
         )
+        msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        msg_box.setDefaultButton(QMessageBox.No)
+
+        msg_box.setStyleSheet(
+            """
+                  QMessageBox {
+                      background-color: white;
+                      font-size: 16px;
+                  }
+                  QLabel {
+                    background-color: white;
+                    color: black;
+                  }
+                  QPushButton {
+                      background-color: white;
+                      border: 1px solid black;
+                      padding: 5px 20px;
+                      color: black;
+                  }
+              """
+        )
+
+        reply = msg_box.exec()
+
         if reply == QMessageBox.No:
             return 0
         else:
@@ -1545,6 +1630,7 @@ class Widget(QWidget, Ui_admin_widget):
                 )
                 temp_cursor.execute(request, objects)
                 self.database.connection.commit()
+                self.show_table_film()
                 return 0
 
         self.previous_value = self.tableWidget.item(row, column).text()
@@ -2254,6 +2340,7 @@ class Widget(QWidget, Ui_admin_widget):
                 QMessageBox.Icon.Information, "Права доступу змінено успішно"
             )
             dialog.accept()
+            self.show_table_users()
 
         if column == 2:
             temp_window(
@@ -2752,6 +2839,10 @@ class Zvit_Window(QDialog):
             QTableWidget {
                 background-color: white;
                 font-size: 18px;
+            }
+            QHeaderView::section {
+                font-size: 20px;
+                font-weight: bold;
             }
             QScrollBar:vertical {
                 background: #ff0055;

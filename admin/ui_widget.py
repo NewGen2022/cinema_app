@@ -26,7 +26,6 @@ class Ui_admin_widget(object):
         font = QFont()
         font.setFamilies(["Franklin Gothic Heavy, sans - serif"])
         font.setPointSize(16)
-        font.setBold(True)
         admin_widget.setFont(font)
         self.admin_qwidget = QWidget(admin_widget)
         self.admin_qwidget.setObjectName("admin_qwidget")
@@ -273,6 +272,10 @@ class Ui_admin_widget(object):
             QScrollBar:vertical {
                 background: #ff0055;
             }
+            QHeaderView::section {
+                font-size: 20px;
+                font-weight: bold;
+            }
             QScrollBar::handle:vertical {
                 background: #ff0055;
             }
@@ -287,6 +290,10 @@ class Ui_admin_widget(object):
             }
             QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
                 background: #ff0055;
+            }
+            QTableWidget QLineEdit {
+                background-color: #292929;
+                color: white;
             }
             """
         )
