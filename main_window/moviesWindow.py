@@ -1,5 +1,5 @@
 from PySide6.QtCore import QRect, QSize, Qt
-from PySide6.QtGui import QFont, QPixmap, QWheelEvent
+from PySide6.QtGui import QFont, QPixmap, QWheelEvent, QIcon
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QLabel,
@@ -26,6 +26,9 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: #292929;")
         self.setup_ui()
         self.connect_all_events()
+
+        icon = QIcon("./assets/icon.ico")
+        self.setWindowIcon(icon)
 
         connection = self.database.connection
         cursor = connection.cursor()
@@ -161,7 +164,12 @@ class MainWindow(QMainWindow):
 
         self.setCentralWidget(self.central_widget)
 
-        self.setWindowTitle("MainWindow")
+        self.no_match_label = QLabel("Фільмів по запиту не знайдено")
+        self.no_match_label.setAlignment(Qt.AlignCenter)
+        self.vertical_layout.addWidget(self.no_match_label)
+        self.no_match_label.setVisible(False)
+
+        self.setWindowTitle("Фільми")
         self.search.setPlaceholderText("Пошук")
         self.help_button.setText("? Help")
 
@@ -187,17 +195,30 @@ class MainWindow(QMainWindow):
 
         cursor.execute(query_movie_info)
         self.movie_info = cursor.fetchall()
-        self.movie_ids = []
-        self.movie_titles = []
-        self.movie_posters = []
-        for item in self.movie_info:
-            self.movie_ids.append(item[0])
-            self.movie_titles.append(item[1])
-            self.movie_posters.append(item[2])
 
-        self.display_all_movies()
+        if not self.movie_info:
+            self.display_no_matches()
+        else:
+            self.movie_ids = []
+            self.movie_titles = []
+            self.movie_posters = []
+            for item in self.movie_info:
+                self.movie_ids.append(item[0])
+                self.movie_titles.append(item[1])
+                self.movie_posters.append(item[2])
+
+            self.display_all_movies()
+
+    def display_no_matches(self):
+        self.no_match_label.setStyleSheet(
+            "color: white; font-size: 30px; margin: 30px; font-weight: bold;"
+        )
+        self.no_match_label.setVisible(True)
 
     def display_all_movies(self):
+        # Hide "No matching films" message
+        self.no_match_label.setVisible(False)
+
         scroll_area = self.findChild(QScrollArea, "scroll_area")
         scroll_widget = QWidget()
         scroll_layout = QHBoxLayout(scroll_widget)
