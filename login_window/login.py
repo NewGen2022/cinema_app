@@ -63,7 +63,7 @@ class Login(ctk.CTk):
             frame_login_input, "З поверненням!", text_color="#FB7A9D", font_size=44
         ).pack(pady=(100, 0))
         self.create_label(
-            frame_login_input, "Авторизуйтесь в акаунті", text_color="gray"
+            frame_login_input, "Авторизуйтесь в акаунті", text_color="#ffffff"
         ).pack(padx=(0, 120), pady=(0, 60))
 
         self.username = tk.StringVar()
