@@ -385,7 +385,7 @@ class HallWindow(QtWidgets.QWidget):
 
         screen_container = QtWidgets.QLabel()
 
-        s_pixmap = QtGui.QIcon("./assets/screen.png")
+        s_pixmap = QtGui.QIcon("./assets/screen.jpg")
         screen_container.setPixmap(s_pixmap.pixmap(QtCore.QSize(1180, 960)))
 
         screen_container.setAlignment(QtCore.Qt.AlignCenter)
